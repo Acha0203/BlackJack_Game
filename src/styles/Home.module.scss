@@ -1,9 +1,20 @@
-.bj_table {
-  opacity: 0.5;
+.cards {
+  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5)),
+    url('../../public/images/_i_icon_14047_icon_140470_512.png');
+  width: 260px;
+  height: 260px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 80%;
+  margin-bottom: 1rem;
 }
 
-.bj_table_wrapper {
-  display: flex;
-  justify-content: start;
+/* SVG */
+.svg_container {
+  display: flex-row;
+  justify-content: center;
   align-items: center;
+  filter: drop-shadow(5px 5px 5px #325a2e);
+  padding-top: 4rem;
+  margin: 0.1rem;
 }
