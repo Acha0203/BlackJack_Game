@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialBJState = {
-  userName: 'User',
+  userName: '',
   gameType: 'Blackjack',
   chips: 400,
 };
