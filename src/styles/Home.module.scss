@@ -1,5 +1,9 @@
 .cards {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.5)),
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.8),
+      rgba(255, 255, 255, 0.5)
+    ),
     url('../../public/images/_i_icon_14047_icon_140470_512.png');
   width: 260px;
   height: 260px;
@@ -14,7 +18,7 @@
   display: flex-row;
   justify-content: center;
   align-items: center;
-  filter: drop-shadow(5px 5px 5px #325a2e);
+  filter: drop-shadow(5px 5px 5px #505050);
   padding-top: 4rem;
   margin: 0.1rem;
 }

@@ -1,12 +1,17 @@
+import { FormEventHandler } from 'react';
 import styles from '../styles/Home.module.scss';
 import TitleSVG from '@/components/svgFiles/titleSVG';
 import InputText from '@/components/ui/InputText';
 import SelectGameType from '@/components/ui/SelectGameType';
 
+const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+  event.preventDefault();
+}
+
 const Home = () => {
   return (
     <div className='flex justify-center items-center'>
-      <form className='bg-white shadow-md rounded px-8 pt-6 pb-6'>
+      <form className='bg-white shadow-md rounded px-8 pt-6 pb-6' onSubmit={handleSubmit}>
         <div className={styles.cards}>
           <TitleSVG />
         </div>
