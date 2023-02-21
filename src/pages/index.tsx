@@ -3,10 +3,11 @@ import styles from '../styles/Home.module.scss';
 import TitleSVG from '@/components/svgFiles/titleSVG';
 import InputText from '@/components/ui/InputText';
 import SelectGameType from '@/components/ui/SelectGameType';
+import StartButton from '@/components/ui/StartButton';
 
 const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
   event.preventDefault();
-}
+};
 
 const Home = () => {
   return (
@@ -22,12 +23,7 @@ const Home = () => {
           <SelectGameType />
         </div>
         <div className='flex items-center justify-center w-64'>
-          <button
-            className='bg-green-700 hover:bg-lime-500 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-64'
-            type='button'
-          >
-            Game Start
-          </button>
+          <StartButton />
         </div>
       </form>
     </div>
