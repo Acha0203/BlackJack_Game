@@ -1,4 +1,5 @@
 import { Listbox, Transition } from '@headlessui/react';
+import { CheckIcon } from '@heroicons/react/20/solid';
 import { useState } from 'react';
 
 const gameType = [
@@ -34,16 +35,17 @@ const SelectGameType = () => {
         <Listbox.Options>
           {gameType.map((game) => (
             <Listbox.Option key={game.id} value={game} disabled={game.unavailable}>
-              {({ active, disabled }) => (
+              {({ active, disabled, selected }) => (
                 <div
                   className={`${
                     disabled
                       ? 'bg-gray-200 text-gray-400'
                       : active
-                      ? 'bg-green-700 text-white'
+                      ? 'bg-lime-600 text-white'
                       : 'bg-white text-black'
                   } p-2 w-full flex items-center rounded border border-gray-400 shadow`}
                 >
+                  {selected && <CheckIcon width={20} />}
                   {game.type}
                 </div>
               )}
