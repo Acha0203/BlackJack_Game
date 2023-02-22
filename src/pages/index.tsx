@@ -14,7 +14,9 @@ const Home = () => {
     <div className='flex justify-center items-center'>
       <form className='bg-white shadow-md rounded px-8 pt-6 pb-6' onSubmit={handleSubmit}>
         <div className={styles.cards}>
-          <TitleSVG />
+          <div className='pt-14'>
+            <TitleSVG />
+          </div>
         </div>
         <div className='mb-4 w-64'>
           <InputText />

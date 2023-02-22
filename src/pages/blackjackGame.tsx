@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import styles from '../styles/Game.module.scss';
 
-const Game = () => {
+const BlackjackGame = () => {
   return (
     <div className={styles.bj_table_wrapper}>
       <Image
@@ -14,4 +14,4 @@ const Game = () => {
   );
 };
 
-export default Game;
+export default BlackjackGame;

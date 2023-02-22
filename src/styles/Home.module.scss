@@ -1,24 +1,96 @@
 .cards {
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.8),
-      rgba(255, 255, 255, 0.5)
-    ),
-    url('../../public/images/_i_icon_14047_icon_140470_512.png');
+  background: {
+    image: linear-gradient(
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.8),
+        rgba(255, 255, 255, 0.5)
+      ),
+      url('../../public/images/_i_icon_14047_icon_140470_512.png');
+    repeat: no-repeat;
+    position: center;
+    size: 80%;
+  }
+
   width: 260px;
   height: 260px;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 80%;
   margin-bottom: 1rem;
 }
 
 /* SVG */
-.svg_container {
+.shadow_container {
   display: flex-row;
   justify-content: center;
   align-items: center;
-  filter: drop-shadow(5px 5px 5px #505050);
-  padding-top: 4rem;
   margin: 0.1rem;
+  filter: drop-shadow(5px 5px 5px #505050);
+}
+
+/* Chips */
+@mixin chip {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.3rem;
+}
+
+.chip5 {
+  @include chip;
+  color: #ff8400;
+}
+
+.chip20 {
+  @include chip;
+  color: #009a39;
+}
+
+.chip50 {
+  @include chip;
+  color: #00198a;
+}
+
+.chip100 {
+  @include chip;
+  color: #45008f;
+}
+
+.chip_shiny {
+  display: block;
+  position: relative;
+  cursor: pointer;
+  border-radius: 100%;
+  background-color: #fff;
+  filter: drop-shadow(2px 2px 2px #505050);
+  overflow: hidden;
+}
+
+.shining {
+  height: 100%;
+  width: 30px;
+  position: absolute;
+  top: -180px;
+  left: 0;
+  background-color: #fff;
+  opacity: 0;
+  transform: rotate(45deg);
+  animation: shining 2s ease-in-out infinite;
+}
+
+@keyframes shining {
+  0% {
+    transform: scale(0) rotate(45deg);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(0) rotate(45deg);
+    opacity: 0.5;
+  }
+  81% {
+    transform: scale(4) rotate(45deg);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(50) rotate(45deg);
+    opacity: 0;
+  }
 }
