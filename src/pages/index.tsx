@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { FormEventHandler } from 'react';
 import styles from '../styles/Home.module.scss';
 import TitleSVG from '@/components/svgFiles/titleSVG';
@@ -5,14 +6,10 @@ import InputText from '@/components/ui/InputText';
 import SelectGameType from '@/components/ui/SelectGameType';
 import StartButton from '@/components/ui/StartButton';
 
-const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
-  event.preventDefault();
-};
-
 const Home = () => {
   return (
     <div className='flex justify-center items-center'>
-      <form className='bg-white shadow-md rounded px-8 pt-6 pb-6' onSubmit={handleSubmit}>
+      <form className='bg-white shadow-md rounded px-8 pt-6 pb-6'>
         <div className={styles.cards}>
           <div className='pt-14'>
             <TitleSVG />
@@ -25,7 +22,9 @@ const Home = () => {
           <SelectGameType />
         </div>
         <div className='flex items-center justify-center w-64'>
-          <StartButton />
+          <Link href='/betting'>
+            <StartButton />
+          </Link>
         </div>
       </form>
     </div>

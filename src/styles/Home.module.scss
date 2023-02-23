@@ -54,43 +54,43 @@
   color: #45008f;
 }
 
+$color: #ffffff;
+
 .chip_shiny {
+  background-color: $color;
   display: block;
   position: relative;
   cursor: pointer;
   border-radius: 100%;
-  background-color: #fff;
   filter: drop-shadow(2px 2px 2px #505050);
   overflow: hidden;
+
+  &.shiny {
+    background: {
+      color: $color;
+      image: linear-gradient(-45deg, $color 50%, darken($color, 20%) 60%, $color 70%);
+      size: 600% 100%;
+    }
+    animation: shine 20s infinite;
+    animation: {
+      delay: 0s;
+      timing-function: linear;
+    }
+  }
+
+  &:active {
+    top: 2px;
+  }
 }
 
-.shining {
-  height: 100%;
-  width: 30px;
-  position: absolute;
-  top: -180px;
-  left: 0;
-  background-color: #fff;
-  opacity: 0;
-  transform: rotate(45deg);
-  animation: shining 2s ease-in-out infinite;
-}
-
-@keyframes shining {
+@keyframes shine {
   0% {
-    transform: scale(0) rotate(45deg);
-    opacity: 0;
+    background-position-x: 400%;
   }
-  80% {
-    transform: scale(0) rotate(45deg);
-    opacity: 0.5;
-  }
-  81% {
-    transform: scale(4) rotate(45deg);
-    opacity: 1;
+  50% {
+    background-position-x: 0%;
   }
   100% {
-    transform: scale(50) rotate(45deg);
-    opacity: 0;
+    background-position-x: -400%;
   }
 }
