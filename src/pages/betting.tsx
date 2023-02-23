@@ -9,7 +9,7 @@ const BettingPage = () => {
       <div>
         <BettingSVG />
       </div>
-      <div className='flex justify-between items-center'>
+      <div className='flex justify-between items-center p-4'>
         <ChipButton
           imageUrl='images/chip-icon-1.svg'
           amount={5}
@@ -34,6 +34,12 @@ const BettingPage = () => {
           color='#45008f'
           onClick={() => console.log('You betted $100!')}
         />
+      </div>
+      <div className='text-center'>
+        <p className='text-3xl'>You Bet $20</p>
+      </div>
+      <div className='text-center'>
+        <p className='text-xl'>Your Chips : $400</p>
       </div>
     </div>
   );

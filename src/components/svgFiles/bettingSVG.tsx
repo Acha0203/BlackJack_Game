@@ -2,7 +2,7 @@ const BettingSVG = () => {
   return (
     <div>
       <svg
-        viewBox='0 0 350 30'
+        viewBox='0 0 360 30'
         width='400'
         height='70'
         xmlns='http://www.w3.org/2000/svg'
@@ -18,7 +18,7 @@ const BettingSVG = () => {
           strokeWidth='0.2rem'
           strokeLinejoin='round'
         >
-          Click Your Chips to Bet
+          Click These Chips to Bet
         </text>
         <text
           fill='url(#gradient100)'
@@ -28,7 +28,7 @@ const BettingSVG = () => {
           textAnchor='middle'
           dominantBaseline='middle'
         >
-          Click Your Chips to Bet
+          Click These Chips to Bet
         </text>
         <defs>
           <linearGradient id='gradient100' x1='0%' y1='0%' x2='0%' y2='100%'>
