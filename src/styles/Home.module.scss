@@ -43,6 +43,7 @@ $color: #ffffff;
   cursor: pointer;
   border-radius: 100%;
   filter: drop-shadow(2px 2px 2px #505050);
+  transform: translateZ(0);
   overflow: hidden;
 
   &.shiny {

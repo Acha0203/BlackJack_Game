@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import styles from '../../styles/Home.module.scss';
+import styles from '../../../styles/Home.module.scss';
 
 interface Props {
   imageUrl: string;

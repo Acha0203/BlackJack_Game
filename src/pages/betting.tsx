@@ -1,7 +1,6 @@
-import Image from 'next/image';
-import styles from '../styles/Home.module.scss';
 import BettingSVG from '@/components/svgFiles/bettingSVG';
-import ChipButton from '@/components/ui/ChipButton';
+import ChipButton from '@/components/ui/buttons/ChipButton';
+import OKButton from '@/components/ui/buttons/OKButton';
 
 const BettingPage = () => {
   return (
@@ -36,10 +35,13 @@ const BettingPage = () => {
         />
       </div>
       <div className='text-center'>
-        <p className='text-3xl'>You Bet $20</p>
+        <p className='text-3xl'>You Bet $0</p>
       </div>
       <div className='text-center'>
         <p className='text-xl'>Your Chips : $400</p>
+      </div>
+      <div className='flex justify-center items-center p-4'>
+        <OKButton />
       </div>
     </div>
   );

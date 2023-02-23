@@ -4,7 +4,7 @@ import styles from '../styles/Home.module.scss';
 import TitleSVG from '@/components/svgFiles/titleSVG';
 import InputText from '@/components/ui/InputText';
 import SelectGameType from '@/components/ui/SelectGameType';
-import StartButton from '@/components/ui/StartButton';
+import StartButton from '@/components/ui/buttons/StartButton';
 
 const Home = () => {
   return (
