@@ -26,32 +26,12 @@
 }
 
 /* Chips */
-@mixin chip {
+.chip {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 1.3rem;
-}
-
-.chip5 {
-  @include chip;
-  color: #ff8400;
-}
-
-.chip20 {
-  @include chip;
-  color: #009a39;
-}
-
-.chip50 {
-  @include chip;
-  color: #00198a;
-}
-
-.chip100 {
-  @include chip;
-  color: #45008f;
 }
 
 $color: #ffffff;

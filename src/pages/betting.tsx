@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import styles from '../styles/Home.module.scss';
 import BettingSVG from '@/components/svgFiles/bettingSVG';
+import ChipButton from '@/components/ui/ChipButton';
 
 const BettingPage = () => {
   return (
@@ -9,22 +10,30 @@ const BettingPage = () => {
         <BettingSVG />
       </div>
       <div className='flex justify-between items-center'>
-        <button className={`${styles.chip_shiny} ${styles.shiny}`}>
-          <Image src='images/chip-icon-1.svg' alt='Chip of 5' width={80} height={80} />
-          <p className={styles.chip5}>5</p>
-        </button>
-        <button className={`${styles.chip_shiny} ${styles.shiny}`}>
-          <Image src='images/chip-icon-2.svg' alt='Chip of 20' width={80} height={80} />
-          <p className={styles.chip20}>20</p>
-        </button>
-        <button className={`${styles.chip_shiny} ${styles.shiny}`}>
-          <Image src='images/chip-icon-3.svg' alt='Chip of 50' width={80} height={80} />
-          <p className={styles.chip50}>50</p>
-        </button>
-        <button className={`${styles.chip_shiny} ${styles.shiny}`}>
-          <Image src='images/chip-icon-4.svg' alt='Chip of 100' width={80} height={80} />
-          <p className={styles.chip100}>100</p>
-        </button>
+        <ChipButton
+          imageUrl='images/chip-icon-1.svg'
+          amount={5}
+          color='#ff8400'
+          onClick={() => console.log('You betted $5!')}
+        />
+        <ChipButton
+          imageUrl='images/chip-icon-2.svg'
+          amount={20}
+          color='#009a39'
+          onClick={() => console.log('You betted $20!')}
+        />
+        <ChipButton
+          imageUrl='images/chip-icon-3.svg'
+          amount={50}
+          color='#00198a'
+          onClick={() => console.log('You betted $50!')}
+        />
+        <ChipButton
+          imageUrl='images/chip-icon-4.svg'
+          amount={100}
+          color='#45008f'
+          onClick={() => console.log('You betted $100!')}
+        />
       </div>
     </div>
   );

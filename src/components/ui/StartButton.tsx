@@ -1,6 +1,16 @@
+import { useSelector } from 'react-redux';
+import { useAppDispatch } from '@/store';
+import { blackjackActions } from '@/store/blackjack';
+import { BlackjackState } from '@/types';
+
 const StartButton = () => {
+  const dispatch = useAppDispatch();
+  const userName = useSelector((state: BlackjackState) => state.blackjack.userName);
+
   const handleClick = () => {
-    
+    if (userName === '') {
+      dispatch(blackjackActions.setUserName('John Doe'));
+    }
   };
 
   return (
