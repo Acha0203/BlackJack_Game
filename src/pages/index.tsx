@@ -33,13 +33,13 @@ const Home = () => {
       path: '/', // すべてのページでCookieを利用可能にするため、ルートパスにセット
       sameSite: 'lax',
     });
-    router.push('/betting');
+    router.push('/blackjackGame');
   };
 
   return (
     <div className='flex justify-center items-center'>
       <form className='bg-white shadow-md rounded px-8 pt-6 pb-6'>
-        <div className={styles.cards}>
+        <div className={styles.cards_icon}>
           <div className='pt-14'>
             <TitleSVG />
           </div>

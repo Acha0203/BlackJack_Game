@@ -1,19 +1,12 @@
-import { parseCookies } from 'nookies';
+import AllInButton from './buttons/AllInButton';
+import ResetButton from './buttons/ResetButton';
 import BettingSVG from '@/components/svgFiles/bettingSVG';
 import ChipButton from '@/components/ui/buttons/ChipButton';
 import OKButton from '@/components/ui/buttons/OKButton';
-import { Player } from '@/model';
 
-const BettingPage = () => {
-  // Cookieを使ってuserインスタンスを受け取る
-  const cookies = parseCookies();
-  const userObj = JSON.parse(cookies.user);
-  // オブジェクトリテラルの形で渡されるため、クラスインスタンスに復元する
-  const user = new Player(userObj.name, userObj.type, userObj.gameType, userObj.chips);
-  console.log(user);
-
+const BettingWindow = () => {
   return (
-    <div className='flex-row justify-center items-center bg-white p-5'>
+    <div className='flex-row justify-center items-center bg-white p-5 z-10'>
       <div>
         <BettingSVG />
       </div>
@@ -49,11 +42,15 @@ const BettingPage = () => {
       <div className='text-center'>
         <p className='text-xl'>Your Chips : $400</p>
       </div>
-      <div className='flex justify-center items-center p-4'>
+      <div className='flex justify-center items-center pt-4'>
         <OKButton />
+      </div>
+      <div className='flex justify-center items-center pt-2'>
+        <ResetButton />
+        <AllInButton />
       </div>
     </div>
   );
 };
 
-export default BettingPage;
+export default BettingWindow;
