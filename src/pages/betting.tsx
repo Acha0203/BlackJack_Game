@@ -1,8 +1,17 @@
+import { parseCookies } from 'nookies';
 import BettingSVG from '@/components/svgFiles/bettingSVG';
 import ChipButton from '@/components/ui/buttons/ChipButton';
 import OKButton from '@/components/ui/buttons/OKButton';
+import { Player } from '@/model';
 
 const BettingPage = () => {
+  // Cookieを使ってuserインスタンスを受け取る
+  const cookies = parseCookies();
+  const userObj = JSON.parse(cookies.user);
+  // オブジェクトリテラルの形で渡されるため、クラスインスタンスに復元する
+  const user = new Player(userObj.name, userObj.type, userObj.gameType, userObj.chips);
+  console.log(user);
+
   return (
     <div className='flex-row justify-center items-center bg-white p-5'>
       <div>
