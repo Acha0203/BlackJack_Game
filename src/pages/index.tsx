@@ -16,23 +16,21 @@ const Home = () => {
   const userName = useSelector((state: BlackjackState) => state.blackjack.userName);
   const gameType = useSelector((state: BlackjackState) => state.blackjack.gameType);
   const router = useRouter();
-  const user = new Player(userName, 'user', gameType);
+  // const user = new Player(userName, 'user', gameType);
 
   const handleClick = () => {
     if (userName === '') {
       dispatch(blackjackActions.setUserName('John Doe'));
-      user.name = 'John Doe';
-    } else {
-      user.name = userName;
     }
-    user.gameType = gameType;
+    // user.name = userName;
+    // user.gameType = gameType;
 
     // Cookieを使ってuserインスタンスを遷移先に渡す
-    setCookie(null, 'user', JSON.stringify(user), {
-      maxAge: 30 * 24 * 60 * 60, // 30日間有効
-      path: '/', // すべてのページでCookieを利用可能にするため、ルートパスにセット
-      sameSite: 'lax',
-    });
+    // setCookie(null, 'user', JSON.stringify(user), {
+    //   maxAge: 30 * 24 * 60 * 60, // 30日間有効
+    //   path: '/', // すべてのページでCookieを利用可能にするため、ルートパスにセット
+    //   sameSite: 'lax',
+    // });
     router.push('/blackjackGame');
   };
 
@@ -50,7 +48,7 @@ const Home = () => {
         <div className='inline-block relative w-64 mb-4'>
           <SelectGameType />
         </div>
-        <div className='flex items-center justify-center w-64'>
+        <div className='flex items-center justify-center'>
           <StartButton onClick={handleClick} />
         </div>
       </form>

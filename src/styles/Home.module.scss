@@ -25,7 +25,7 @@
   filter: drop-shadow(5px 5px 5px #505050);
 }
 
-/* Chips */
+/* Chip Button */
 .chip {
   position: absolute;
   top: 50%;
@@ -60,7 +60,13 @@ $color: #ffffff;
   }
 
   &:active {
-    top: 2px;
+    transform: translate(2px, 2px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translate(-2px, -2px);
   }
 }
 
@@ -104,9 +110,18 @@ $color: #ffffff;
   }
   border-radius: 9999px;
 
+  &:hover {
+    filter: brightness(1.5);
+  }
+
   &:active {
-    position: relative;
-    top: 2px;
+    transform: translate(2px, 2px);
+  }
+
+  &:disabled {
+    filter: brightness(0.5);
+    cursor: not-allowed;
+    transform: translate(-2px, -2px);
   }
 }
 
@@ -114,10 +129,6 @@ $color: #ffffff;
   @include buttons();
   background-color: darkgreen;
   width: 100%;
-
-  &:hover {
-    background-color: darkseagreen;
-  }
 }
 
 .red_btn {
@@ -127,21 +138,13 @@ $color: #ffffff;
   background-color: darkred;
   width: 50%;
   margin-left: 4px;
-
-  &:hover {
-    background-color: #d46464;
-  }
 }
 
 .blue_btn {
   @include buttons();
   display: flex;
   justify-content: center;
-  background-color: blue;
+  background-color: darkblue;
   width: 50%;
   margin-right: 4px;
-
-  &:hover {
-    background-color: #438eff;
-  }
 }

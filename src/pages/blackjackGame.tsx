@@ -1,16 +1,29 @@
 import Image from 'next/image';
-import { parseCookies } from 'nookies';
+import { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from '../styles/Home.module.scss';
 import BettingWindow from '@/components/ui/BettingWindow';
-import { Player } from '@/model';
+import { Player, Table } from '@/model';
+import { blackjackActions } from '@/store/blackjack';
+import { BlackjackState } from '@/types';
 
 const BlackjackGame = () => {
   // Cookieを使ってuserインスタンスを受け取る
-  const cookies = parseCookies();
-  const userObj = JSON.parse(cookies.user);
+  // const cookies = parseCookies();
+  // const userObj = JSON.parse(cookies.user);
   // オブジェクトリテラルの形で渡されるため、クラスインスタンスに復元する
-  const user = new Player(userObj.name, userObj.type, userObj.gameType, userObj.chips);
-  console.log(user);
+  // const user = new Player(userObj.name, userObj.type, userObj.gameType, userObj.chips);
+  const dispatch = useDispatch();
+  const userName = useSelector((state: BlackjackState) => state.blackjack.userName);
+  const gameType = useSelector((state: BlackjackState) => state.blackjack.gameType);
+  const showWindow = useSelector((state: BlackjackState) => state.blackjack.showWindow);
+  const table = new Table(gameType, userName);
+
+  useEffect(() => {
+    if (table.gamePhase === 'betting') {
+      dispatch(blackjackActions.setShowWindow(true));
+    }
+  }, [dispatch, table.gamePhase]);
 
   return (
     <div>
@@ -22,9 +35,11 @@ const BlackjackGame = () => {
           fill
         />
       </div>
-      <div className={styles.overlay}>
-        <BettingWindow />
-      </div>
+      {showWindow && (
+        <div className={styles.overlay}>
+          <BettingWindow />
+        </div>
+      )}
     </div>
   );
 };

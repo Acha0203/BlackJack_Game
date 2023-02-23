@@ -4,6 +4,8 @@ const initialBJState = {
   userName: '',
   gameType: 'Blackjack',
   chips: 400,
+  bet: 0,
+  showWindow: false,
 };
 
 const blackjackSlice = createSlice({
@@ -21,6 +23,15 @@ const blackjackSlice = createSlice({
     },
     subtractChips: (state: { chips: number }, action: { payload: number }) => {
       state.chips -= action.payload;
+    },
+    addBet: (state: { bet: number }, action: { payload: number }) => {
+      state.bet += action.payload;
+    },
+    subtractBet: (state: { bet: number }, action: { payload: number }) => {
+      state.bet -= action.payload;
+    },
+    setShowWindow: (state: { showWindow: boolean }, action: { payload: boolean }) => {
+      state.showWindow = action.payload;
     },
   },
 });
