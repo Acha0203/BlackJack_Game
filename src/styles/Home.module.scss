@@ -148,7 +148,7 @@ $color: #ffffff;
 .bj_table_bg {
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
   align-items: center;
   width: 100vw;
   height: 100vh;
@@ -180,7 +180,7 @@ $card-mark-position-top: 35px;
   .back,
   .front {
     position: absolute;
-    transition: all 0.6s;
+    transition: all 1s;
     left: 0;
     top: 0;
     width: 100%;
@@ -194,13 +194,13 @@ $card-mark-position-top: 35px;
     transform: perspective(400px) rotateY(-180deg);
   }
 
-  /* ホバー時のカード裏面 */
-  &:hover .back {
+  /* 開いた時のカード裏面 */
+  .hide_back {
     transform: perspective(400px) rotateY(180deg);
   }
 
-  /* ホバー時のカード表面 */
-  &:hover .front {
+  /* 開いた時のカード表面 */
+  .open_front {
     transform: perspective(400px) rotateY(0);
   }
 }

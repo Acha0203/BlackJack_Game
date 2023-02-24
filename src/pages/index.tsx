@@ -20,7 +20,7 @@ const Home = () => {
 
   const handleClick = () => {
     if (userName === '') {
-      dispatch(blackjackActions.setUserName('John Doe'));
+      dispatch(blackjackActions.setUserName('You'));
     }
     // user.name = userName;
     // user.gameType = gameType;

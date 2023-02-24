@@ -51,18 +51,24 @@ const BlackjackGame = () => {
               <p className='text-lg text-white p-1'>Waiting</p>
             </div>
           </div>
-          <div className='grid grid-cols-2 gap-8'>
-            <Card suit='♥︎' rank='A' />
+          <div className='flex justify-center items-center'>
+            <div className='grid grid-cols-5 gap-1 w-40'>
+              <Card suit='♥︎' rank='A' open={true} />
+            </div>
+            <div>
+              <Card suit='♥︎' rank='K' open={false} />
+            </div>
           </div>
         </div>
-        <div className='grid grid-cols-3'>
+        <div className='grid grid-cols-3 gap-6'>
           <div className='flex-col justify-center items-center'>
             <div className='flex justify-center items-center'>
               <Image src='images/robot_icon.svg' alt='robot icon' width={30} height={30} />
               <p className='text-3xl text-white p-2'>AI1</p>
             </div>
-            <div className='text-center'>
-              <p className='text-lg text-white p-2'>Score: XX bet: 50 Chips: 400</p>
+            <div className='text-center mb-2'>
+              <p className='text-lg text-white'>Score: XX bet: 50</p>
+              <p className='text-lg text-white'>Chips: 400</p>
             </div>
             <div className='flex justify-center items-center'>
               <div className='bg-lime-500 rounded-full text-center w-48 mb-4'>
@@ -70,22 +76,12 @@ const BlackjackGame = () => {
               </div>
             </div>
             <div className='flex justify-center items-center'>
-              <div className='grid grid-cols-10 gap-4'>
-                <div>
-                  <Card suit='♥︎' rank='A' />
-                </div>
-                <div>
-                  <Card suit='♦' rank='Q' />
-                </div>
-                <div>
-                  <Card suit='♠' rank='A' />
-                </div>
-                <div>
-                  <Card suit='♣' rank='J' />
-                </div>
-                <div>
-                  <Card suit='♥︎' rank='A' />
-                </div>
+              <div className='grid grid-cols-5 gap-1 w-32'>
+                <Card suit='♥︎' rank='A' open={true} />
+                <Card suit='♦' rank='Q' open={true} />
+                <Card suit='♠' rank='A' open={true} />
+                <Card suit='♣' rank='J' open={true} />
+                <Card suit='♥︎' rank='A' open={true} />
               </div>
             </div>
           </div>
@@ -94,8 +90,9 @@ const BlackjackGame = () => {
               <Image src='images/user_icon.svg' alt='user icon' width={30} height={30} />
               <p className='text-3xl text-white p-2'>{userName}</p>
             </div>
-            <div className='text-center'>
-              <p className='text-lg text-white p-2'>Score: XX bet: 50 Chips: 400</p>
+            <div className='text-center mb-2'>
+              <p className='text-lg text-white'>Score: XX bet: 50</p>
+              <p className='text-lg text-white'>Chips: 400</p>
             </div>
             <div className='flex justify-center items-center'>
               <div className='bg-lime-500 rounded-full text-center w-48 mb-4'>
@@ -103,13 +100,9 @@ const BlackjackGame = () => {
               </div>
             </div>
             <div className='flex justify-center items-center'>
-              <div className='grid grid-cols-10 gap-4'>
-                <div>
-                  <Card suit='♥︎' rank='A' />
-                </div>
-                <div>
-                  <Card suit='♦' rank='Q' />
-                </div>
+              <div className='grid grid-cols-5 gap-1 w-32'>
+                <Card suit='♥︎' rank='A' open={true} />
+                <Card suit='♦' rank='Q' open={true} />
               </div>
             </div>
           </div>
@@ -118,8 +111,9 @@ const BlackjackGame = () => {
               <Image src='images/robot_icon.svg' alt='robot icon' width={30} height={30} />
               <p className='text-3xl text-white p-2'>AI2</p>
             </div>
-            <div className='text-center'>
-              <p className='text-lg text-white p-2'>Score: XX bet: 50 Chips: 400</p>
+            <div className='text-center mb-2'>
+              <p className='text-lg text-white'>Score: XX bet: 50</p>
+              <p className='text-lg text-white'>Chips: 400</p>
             </div>
             <div className='flex justify-center items-center'>
               <div className='bg-lime-500 rounded-full text-center w-48 mb-4'>
@@ -127,16 +121,10 @@ const BlackjackGame = () => {
               </div>
             </div>
             <div className='flex justify-center items-center'>
-              <div className='grid grid-cols-10 gap-4'>
-                <div>
-                  <Card suit='♥︎' rank='A' />
-                </div>
-                <div>
-                  <Card suit='♦' rank='Q' />
-                </div>
-                <div>
-                  <Card suit='♠' rank='A' />
-                </div>
+              <div className='grid grid-cols-5 gap-1 w-32'>
+                <Card suit='♥︎' rank='A' open={true} />
+                <Card suit='♦' rank='Q' open={true} />
+                <Card suit='♠' rank='A' open={true} />
               </div>
             </div>
           </div>
