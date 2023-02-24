@@ -7,7 +7,11 @@ import OKButton from '@/components/ui/buttons/OKButton';
 import { blackjackActions } from '@/store/blackjack';
 import { BlackjackState } from '@/types';
 
-const BettingWindow = () => {
+interface Props {
+  onClick: () => void;
+}
+
+const BettingWindow: React.FC<Props> = ({ onClick }) => {
   const dispatch = useDispatch();
   const bet = useSelector((state: BlackjackState) => state.blackjack.bet);
   const chips = useSelector((state: BlackjackState) => state.blackjack.chips);
@@ -54,7 +58,7 @@ const BettingWindow = () => {
         <p className='text-xl'>Your Chips : ${chips}</p>
       </div>
       <div className='flex justify-center items-center pt-4'>
-        <OKButton />
+        <OKButton onClick={onClick} />
       </div>
       <div className='flex justify-center items-center pt-2'>
         <ResetButton />

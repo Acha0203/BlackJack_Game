@@ -20,6 +20,9 @@ const ChipButton: React.FC<Props> = ({ imageUrl, amount, color, onClick }) => {
     if (chips - bet < amount) {
       setIsShort(true);
     }
+    if (chips - bet >= amount) {
+      setIsShort(false);
+    }
   }, [amount, bet, chips]);
 
   return (

@@ -27,8 +27,8 @@ const blackjackSlice = createSlice({
     addBet: (state: { bet: number }, action: { payload: number }) => {
       state.bet += action.payload;
     },
-    subtractBet: (state: { bet: number }, action: { payload: number }) => {
-      state.bet -= action.payload;
+    resetBet: (state: { bet: number }) => {
+      state.bet = 0;
     },
     setShowWindow: (state: { showWindow: boolean }, action: { payload: boolean }) => {
       state.showWindow = action.payload;

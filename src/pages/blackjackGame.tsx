@@ -16,8 +16,17 @@ const BlackjackGame = () => {
   const dispatch = useDispatch();
   const userName = useSelector((state: BlackjackState) => state.blackjack.userName);
   const gameType = useSelector((state: BlackjackState) => state.blackjack.gameType);
+  const bet = useSelector((state: BlackjackState) => state.blackjack.bet);
   const showWindow = useSelector((state: BlackjackState) => state.blackjack.showWindow);
   const table = new Table(gameType, userName);
+
+  const handleClick = () => {
+    table.players[0].bet = bet;
+    table.players[0].gameStatus = 'waiting';
+    console.log(table.players[0]);
+
+    dispatch(blackjackActions.setShowWindow(false));
+  };
 
   useEffect(() => {
     if (table.gamePhase === 'betting') {
@@ -37,7 +46,7 @@ const BlackjackGame = () => {
       </div>
       {showWindow && (
         <div className={styles.overlay}>
-          <BettingWindow />
+          <BettingWindow onClick={() => handleClick()} />
         </div>
       )}
     </div>
