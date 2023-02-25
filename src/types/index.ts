@@ -4,6 +4,5 @@ export type BlackjackState = {
     gameType: string;
     chips: number;
     bet: number;
-    showWindow: boolean;
   };
 };

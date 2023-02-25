@@ -227,7 +227,6 @@ export class GameDecision {
 
 export class Table {
   gameType: string;
-  userName: string;
   betDenominations: number[];
   deck: Deck;
   players: Player[];
@@ -240,11 +239,9 @@ export class Table {
       Array betDenominations : プレイヤーが選択できるベットの単位。デフォルトは[5,20,50,100]。
       return Table : ゲームフェーズ、デッキ、プレイヤーが初期化されたテーブル
     */
-  constructor(gameType: string, userName: string, betDenominations = [5, 20, 50, 100]) {
+  constructor(gameType: string, betDenominations = [5, 20, 50, 100]) {
     // ゲームタイプを表します。
     this.gameType = gameType;
-
-    this.userName = userName;
 
     // プレイヤーが選択できるベットの単位。
     this.betDenominations = betDenominations;
@@ -257,11 +254,12 @@ export class Table {
     this.players = [];
 
     // プレイヤーをここで初期化してください。
-    this.players.push(new Player(userName, 'user', this.gameType));
+    this.players.push(new Player('You', 'user', this.gameType));
     this.players.push(new Player('ai1', 'ai', this.gameType));
     this.players.push(new Player('ai2', 'ai', this.gameType));
 
     this.house = new Player('house', 'house', this.gameType);
+    this.house.gameStatus = 'waiting';
     this.turnCounter = this.players.length;
     this.gamePhase = 'betting';
 
@@ -452,8 +450,6 @@ export class Table {
     */
   haveTurn(userData: string): void {
     let turnPlayer = this.getTurnPlayer();
-
-    console.log('turnCounter: ' + this.turnCounter + ' gamePhase: ' + this.gamePhase);
 
     if (turnPlayer.gameStatus === 'broken') {
       this.turnCounter++;

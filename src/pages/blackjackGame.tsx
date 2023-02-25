@@ -1,8 +1,8 @@
-import Image from 'next/image';
-import { useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../styles/Home.module.scss';
-import Card from '@/components/Card';
+import DealerArea from '@/components/DealerArea';
+import PlayerArea from '@/components/PlayerArea';
 import BettingWindow from '@/components/ui/BettingWindow';
 import { Player, Table } from '@/model';
 import { blackjackActions } from '@/store/blackjack';
@@ -18,8 +18,8 @@ const BlackjackGame = () => {
   const userName = useSelector((state: BlackjackState) => state.blackjack.userName);
   const gameType = useSelector((state: BlackjackState) => state.blackjack.gameType);
   const bet = useSelector((state: BlackjackState) => state.blackjack.bet);
-  const showWindow = useSelector((state: BlackjackState) => state.blackjack.showWindow);
-  const table = new Table(gameType, userName);
+  const [showBettingWindow, setShowBettingWindow] = useState(false);
+  const table = useMemo(() => new Table(gameType), [gameType]);
   // テスト用
   let ai1Hand = [
     {
@@ -31,6 +31,15 @@ const BlackjackGame = () => {
       rank: 'K',
     },
   ];
+
+  const renderTable = useCallback(
+    (table: Table) => {
+      table.players[0].name = userName;
+      table.deck.generateDeck();
+      table.deck.shuffle();
+    },
+    [userName],
+  );
 
   const handleClick = () => {
     table.players[0].bet = bet;
@@ -60,116 +69,24 @@ const BlackjackGame = () => {
     console.log(ai1Hand);
     // ここまでテスト用
 
-    dispatch(blackjackActions.setShowWindow(false));
-    table.gamePhase = 'acting';
+    setShowBettingWindow(false);
 
     console.log(table.players);
+    console.log(showBettingWindow);
   };
 
   useEffect(() => {
-    if (table.gamePhase === 'betting') {
-      dispatch(blackjackActions.setShowWindow(true));
-    }
-  }, [dispatch, table.gamePhase]);
+    renderTable(table);
+  }, [renderTable, table]);
 
   return (
     <div>
       <div className={styles.bj_table_bg}>
-        <div className='h-1/2 flex-col'>
-          <div className='flex justify-center items-center'>
-            <Image src='images/dealer_icon.svg' alt='dealer icon' width={40} height={40} />
-            <p className='text-3xl text-white p-2'>Dealer</p>
-          </div>
-          <div className='text-center'>
-            <p className='text-lg text-white p-2'>Score: XX</p>
-          </div>
-          <div className='flex justify-center items-center'>
-            <div className='bg-gray-500 rounded-md text-center w-32 mb-4'>
-              <p className='text-lg text-white p-1'>Waiting</p>
-            </div>
-          </div>
-          <div className='flex justify-center items-center'>
-            <div className='grid grid-cols-5 gap-1 w-40'>
-              <Card suit='♥︎' rank='A' open={true} />
-            </div>
-            <div>
-              <Card suit='♥︎' rank='K' open={false} />
-            </div>
-          </div>
-        </div>
+        <DealerArea house={table.house} />
         <div className='flex justify-center items-start mb-4'>
-          <div className='flex-col justify-center items-start mx-10'>
-            <div className='flex justify-center items-center'>
-              <Image src='images/robot_icon.svg' alt='robot icon' width={30} height={30} />
-              <p className='text-3xl text-white p-2'>{table.players[1].name.toUpperCase()}</p>
-            </div>
-            <div className='text-center mb-2'>
-              <p className='text-lg text-white'>Score: XX bet: 50</p>
-              <p className='text-lg text-white'>Chips: 400</p>
-            </div>
-            <div className='flex justify-center items-center'>
-              <div className='bg-lime-500 rounded-md text-center w-32 mb-4'>
-                <p className='text-lg text-white p-1'>Blackjack</p>
-              </div>
-            </div>
-            <div className='flex justify-center items-center'>
-              <div className='grid grid-cols-5 gap-1 w-32'>
-                {ai1Hand.map((card: { suit: string; rank: string }) => {
-                  return (
-                    <Card
-                      key={card.suit + card.rank}
-                      suit={card.suit}
-                      rank={card.rank}
-                      open={true}
-                    />
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-          <div className='flex-col justify-center items-start mx-10'>
-            <div className='flex justify-center items-center'>
-              <Image src='images/user_icon.svg' alt='user icon' width={30} height={30} />
-              <p className='text-3xl text-white p-2'>{userName}</p>
-            </div>
-            <div className='text-center mb-2'>
-              <p className='text-lg text-white'>Score: XX bet: 50</p>
-              <p className='text-lg text-white'>Chips: 400</p>
-            </div>
-            <div className='flex justify-center items-center'>
-              <div className='bg-lime-500 rounded-md text-center w-32 mb-4'>
-                <p className='text-lg text-white p-1'>Blackjack</p>
-              </div>
-            </div>
-            <div className='flex justify-center items-center'>
-              <div className='grid grid-cols-5 gap-1 w-32 relative left-4'>
-                <Card suit='♥︎' rank='A' open={true} />
-                <Card suit='♦' rank='Q' open={true} />
-              </div>
-            </div>
-          </div>
-          <div className='flex-col justify-center items-start mx-10'>
-            <div className='flex justify-center items-center'>
-              <Image src='images/robot_icon.svg' alt='robot icon' width={30} height={30} />
-              <p className='text-3xl text-white p-2'>AI2</p>
-            </div>
-            <div className='text-center mb-2'>
-              <p className='text-lg text-white'>Score: XX bet: 50</p>
-              <p className='text-lg text-white'>Chips: 400</p>
-            </div>
-            <div className='flex justify-center items-center'>
-              <div className='bg-lime-500 rounded-md text-center w-32 mb-4'>
-                <p className='text-lg text-white p-1'>Blackjack</p>
-              </div>
-            </div>
-            <div className='flex justify-center items-center'>
-              <div className='grid grid-cols-5 gap-1 w-32'>
-                <Card suit='♥︎' rank='A' open={true} />
-                <Card suit='♦' rank='Q' open={true} />
-                <Card suit='♠' rank='A' open={true} />
-              </div>
-            </div>
-          </div>
+          <PlayerArea player={table.players[1]} />
+          <PlayerArea player={table.players[0]} />
+          <PlayerArea player={table.players[2]} />
         </div>
         <div className='flex justify-center items-center bg-black w-full'>
           <div className='m-5'>
@@ -194,7 +111,7 @@ const BlackjackGame = () => {
           </div>
         </div>
       </div>
-      {showWindow && (
+      {showBettingWindow && (
         <div className={styles.overlay}>
           <BettingWindow onClick={() => handleClick()} />
         </div>
