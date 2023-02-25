@@ -18,7 +18,7 @@ export class Deck {
   cards: Card[];
 
   constructor(gameType: string) {
-    // このデッキが扱うゲームタイプ。{'blackjack'}から選択。
+    // このデッキが扱うゲームタイプ。{'Blackjack'}から選択。
     this.gameType = gameType;
 
     // カードの配列
@@ -29,8 +29,8 @@ export class Deck {
   }
 
   generateDeck(): void {
-    if (this.gameType === 'blackjack') {
-      const suits = ['H', 'D', 'C', 'S'];
+    if (this.gameType === 'Blackjack') {
+      const suits = ['♥︎', '♦', '♣', '♠'];
       const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
 
       for (let i = 0; i < suits.length; i++) {
@@ -86,7 +86,7 @@ export class Player {
   /*
         String name : プレイヤーの名前
         String type : プレイヤータイプ。{'ai', 'user', 'house'}から選択。
-        String gameType : {'blackjack'}から選択。プレイヤーの初期化方法を決定するために使用されます。
+        String gameType : {'Blackjack'}から選択。プレイヤーの初期化方法を決定するために使用されます。
         ?Number chips : ゲーム開始に必要なチップ。デフォルトは400。
     */
   constructor(name: string, type: string, gameType: string, chips = 400) {

@@ -20,13 +20,50 @@ const BlackjackGame = () => {
   const bet = useSelector((state: BlackjackState) => state.blackjack.bet);
   const showWindow = useSelector((state: BlackjackState) => state.blackjack.showWindow);
   const table = new Table(gameType, userName);
+  // テスト用
+  let ai1Hand = [
+    {
+      suit: '♥︎',
+      rank: 'A',
+    },
+    {
+      suit: '♠',
+      rank: 'K',
+    },
+  ];
 
   const handleClick = () => {
     table.players[0].bet = bet;
     table.players[0].gameStatus = 'waiting';
-    console.log(table.players[0]);
+    // テスト用
+    table.deck.generateDeck();
+    table.deck.shuffle();
+    for (let i = 0; i < table.players.length; i++) {
+      for (let j = 0; j < 2; j++) {
+        const card = table.deck.drawOne();
+        console.log(card);
+        if (card !== undefined) {
+          table.players[i].hand.push(card);
+        }
+      }
+    }
+
+    for (let i = 0; i < 2; i++) {
+      const card = table.deck.drawOne();
+      if (card !== undefined) {
+        table.house.hand.push(card);
+      }
+    }
+
+    console.log(JSON.parse(JSON.stringify(table.players[1].hand)));
+    ai1Hand = JSON.parse(JSON.stringify(table.players[1].hand));
+    console.log(ai1Hand);
+    // ここまでテスト用
 
     dispatch(blackjackActions.setShowWindow(false));
+    table.gamePhase = 'acting';
+
+    console.log(table.players);
   };
 
   useEffect(() => {
@@ -47,7 +84,7 @@ const BlackjackGame = () => {
             <p className='text-lg text-white p-2'>Score: XX</p>
           </div>
           <div className='flex justify-center items-center'>
-            <div className='bg-gray-500 rounded-full text-center w-48 mb-4'>
+            <div className='bg-gray-500 rounded-full text-center w-32 mb-4'>
               <p className='text-lg text-white p-1'>Waiting</p>
             </div>
           </div>
@@ -60,32 +97,37 @@ const BlackjackGame = () => {
             </div>
           </div>
         </div>
-        <div className='grid grid-cols-3 gap-6'>
-          <div className='flex-col justify-center items-center'>
+        <div className='flex justify-center items-start'>
+          <div className='flex-col justify-center items-start mx-10'>
             <div className='flex justify-center items-center'>
               <Image src='images/robot_icon.svg' alt='robot icon' width={30} height={30} />
-              <p className='text-3xl text-white p-2'>AI1</p>
+              <p className='text-3xl text-white p-2'>{table.players[1].name.toUpperCase()}</p>
             </div>
             <div className='text-center mb-2'>
               <p className='text-lg text-white'>Score: XX bet: 50</p>
               <p className='text-lg text-white'>Chips: 400</p>
             </div>
             <div className='flex justify-center items-center'>
-              <div className='bg-lime-500 rounded-full text-center w-48 mb-4'>
+              <div className='bg-lime-500 rounded-full text-center w-32 mb-4'>
                 <p className='text-lg text-white p-1'>Blackjack</p>
               </div>
             </div>
-            <div className='flex justify-center items-center'>
-              <div className='grid grid-cols-5 gap-1 w-32'>
-                <Card suit='♥︎' rank='A' open={true} />
-                <Card suit='♦' rank='Q' open={true} />
-                <Card suit='♠' rank='A' open={true} />
-                <Card suit='♣' rank='J' open={true} />
-                <Card suit='♥︎' rank='A' open={true} />
+              <div className='flex justify-center items-center'>
+                <div className='grid grid-cols-5 gap-1 w-32'>
+                  {ai1Hand.map((card: { suit: string; rank: string }) => {
+                    return (
+                      <Card
+                        key={card.suit + card.rank}
+                        suit={card.suit}
+                        rank={card.rank}
+                        open={true}
+                      />
+                    );
+                  })}
+                </div>
               </div>
-            </div>
           </div>
-          <div className='flex-col justify-center items-center'>
+          <div className='flex-col justify-center items-start mx-10'>
             <div className='flex justify-center items-center'>
               <Image src='images/user_icon.svg' alt='user icon' width={30} height={30} />
               <p className='text-3xl text-white p-2'>{userName}</p>
@@ -95,18 +137,18 @@ const BlackjackGame = () => {
               <p className='text-lg text-white'>Chips: 400</p>
             </div>
             <div className='flex justify-center items-center'>
-              <div className='bg-lime-500 rounded-full text-center w-48 mb-4'>
+              <div className='bg-lime-500 rounded-full text-center w-32 mb-4'>
                 <p className='text-lg text-white p-1'>Blackjack</p>
               </div>
             </div>
             <div className='flex justify-center items-center'>
-              <div className='grid grid-cols-5 gap-1 w-32'>
+              <div className='grid grid-cols-5 gap-1 w-32 relative left-4'>
                 <Card suit='♥︎' rank='A' open={true} />
                 <Card suit='♦' rank='Q' open={true} />
               </div>
             </div>
           </div>
-          <div className='flex-col justify-center items-center'>
+          <div className='flex-col justify-center items-start mx-10'>
             <div className='flex justify-center items-center'>
               <Image src='images/robot_icon.svg' alt='robot icon' width={30} height={30} />
               <p className='text-3xl text-white p-2'>AI2</p>
@@ -116,7 +158,7 @@ const BlackjackGame = () => {
               <p className='text-lg text-white'>Chips: 400</p>
             </div>
             <div className='flex justify-center items-center'>
-              <div className='bg-lime-500 rounded-full text-center w-48 mb-4'>
+              <div className='bg-lime-500 rounded-full text-center w-32 mb-4'>
                 <p className='text-lg text-white p-1'>Blackjack</p>
               </div>
             </div>
@@ -127,6 +169,11 @@ const BlackjackGame = () => {
                 <Card suit='♠' rank='A' open={true} />
               </div>
             </div>
+          </div>
+        </div>
+        <div className='flex justify-center items-center'>
+          <div className='btn-engine-start'>
+            <p className='text-white'>SURRENDER</p>
           </div>
         </div>
       </div>
