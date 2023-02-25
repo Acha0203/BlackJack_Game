@@ -8,11 +8,11 @@ const StartButton: React.FC<Props> = ({ onClick }) => {
 
   return (
     <button
-      className={styles.green_btn}
+      className={styles.start_btn}
       type='button'
       onClick={onClick}
     >
-      Game Start
+      GAME START
     </button>
   );
 };

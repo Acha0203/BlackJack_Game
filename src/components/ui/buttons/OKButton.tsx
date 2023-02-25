@@ -16,7 +16,7 @@ const OKButton: React.FC<Props> = ({ onClick }) => {
   }, [bet]);
 
   return (
-    <button className={styles.green_btn} type='button' onClick={onClick} disabled={isNotBetting}>
+    <button className={styles.start_btn} type='button' onClick={onClick} disabled={isNotBetting}>
       OK
     </button>
   );

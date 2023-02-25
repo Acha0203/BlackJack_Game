@@ -84,7 +84,7 @@ const BlackjackGame = () => {
             <p className='text-lg text-white p-2'>Score: XX</p>
           </div>
           <div className='flex justify-center items-center'>
-            <div className='bg-gray-500 rounded-full text-center w-32 mb-4'>
+            <div className='bg-gray-500 rounded-md text-center w-32 mb-4'>
               <p className='text-lg text-white p-1'>Waiting</p>
             </div>
           </div>
@@ -97,7 +97,7 @@ const BlackjackGame = () => {
             </div>
           </div>
         </div>
-        <div className='flex justify-center items-start'>
+        <div className='flex justify-center items-start mb-4'>
           <div className='flex-col justify-center items-start mx-10'>
             <div className='flex justify-center items-center'>
               <Image src='images/robot_icon.svg' alt='robot icon' width={30} height={30} />
@@ -108,24 +108,24 @@ const BlackjackGame = () => {
               <p className='text-lg text-white'>Chips: 400</p>
             </div>
             <div className='flex justify-center items-center'>
-              <div className='bg-lime-500 rounded-full text-center w-32 mb-4'>
+              <div className='bg-lime-500 rounded-md text-center w-32 mb-4'>
                 <p className='text-lg text-white p-1'>Blackjack</p>
               </div>
             </div>
-              <div className='flex justify-center items-center'>
-                <div className='grid grid-cols-5 gap-1 w-32'>
-                  {ai1Hand.map((card: { suit: string; rank: string }) => {
-                    return (
-                      <Card
-                        key={card.suit + card.rank}
-                        suit={card.suit}
-                        rank={card.rank}
-                        open={true}
-                      />
-                    );
-                  })}
-                </div>
+            <div className='flex justify-center items-center'>
+              <div className='grid grid-cols-5 gap-1 w-32'>
+                {ai1Hand.map((card: { suit: string; rank: string }) => {
+                  return (
+                    <Card
+                      key={card.suit + card.rank}
+                      suit={card.suit}
+                      rank={card.rank}
+                      open={true}
+                    />
+                  );
+                })}
               </div>
+            </div>
           </div>
           <div className='flex-col justify-center items-start mx-10'>
             <div className='flex justify-center items-center'>
@@ -137,7 +137,7 @@ const BlackjackGame = () => {
               <p className='text-lg text-white'>Chips: 400</p>
             </div>
             <div className='flex justify-center items-center'>
-              <div className='bg-lime-500 rounded-full text-center w-32 mb-4'>
+              <div className='bg-lime-500 rounded-md text-center w-32 mb-4'>
                 <p className='text-lg text-white p-1'>Blackjack</p>
               </div>
             </div>
@@ -158,7 +158,7 @@ const BlackjackGame = () => {
               <p className='text-lg text-white'>Chips: 400</p>
             </div>
             <div className='flex justify-center items-center'>
-              <div className='bg-lime-500 rounded-full text-center w-32 mb-4'>
+              <div className='bg-lime-500 rounded-md text-center w-32 mb-4'>
                 <p className='text-lg text-white p-1'>Blackjack</p>
               </div>
             </div>
@@ -171,9 +171,26 @@ const BlackjackGame = () => {
             </div>
           </div>
         </div>
-        <div className='flex justify-center items-center'>
-          <div className='btn-engine-start'>
-            <p className='text-white'>SURRENDER</p>
+        <div className='flex justify-center items-center bg-black w-full'>
+          <div className='m-5'>
+            <button className={styles.surrender_btn}>
+              <p className='text-white'>SURRENDER</p>
+            </button>
+          </div>
+          <div className='m-5'>
+            <button className={styles.stand_btn}>
+              <p className='text-white'>STAND</p>
+            </button>
+          </div>
+          <div className='m-5'>
+            <button className={styles.hit_btn}>
+              <p className='text-white'>HIT</p>
+            </button>
+          </div>
+          <div className='m-5'>
+            <button className={styles.duble_btn}>
+              <p className='text-white'>DOUBLE</p>
+            </button>
           </div>
         </div>
       </div>

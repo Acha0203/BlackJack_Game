@@ -12,9 +12,9 @@ const ResetButton = () => {
   };
 
   return (
-    <button className={styles.blue_btn} type='button' onClick={handleClick}>
+    <button className={styles.reset_btn} type='button' onClick={handleClick}>
       <Image src='images/undo_icon.svg' alt='money icon' width={20} height={20} />
-      <p className='ml-2'>Reset</p>
+      <p className='ml-2'>RESET</p>
     </button>
   );
 };

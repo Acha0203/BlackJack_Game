@@ -99,14 +99,16 @@ $color: #ffffff;
 @mixin buttons {
   color: #ffffff;
   font-weight: bold;
+  display: flex;
+  justify-content: center;
+  border-radius: 9999px;
   padding: {
     top: 0.6rem;
     bottom: 0.6rem;
   }
-  border-radius: 9999px;
 
   &:hover {
-    filter: brightness(1.5);
+    filter: brightness(1.2);
   }
 
   &:active {
@@ -120,28 +122,69 @@ $color: #ffffff;
   }
 }
 
-.green_btn {
+@mixin green_btn {
   @include buttons();
-  background-color: darkgreen;
+  background: linear-gradient(#005b11, #08a800);
+  border: 2px solid #3a7d4685;
+  box-shadow: 5px 5px 10px #deffe6 inset, -5px -5px 10px #56d266 inset;
+}
+
+@mixin red_btn {
+  @include buttons();
+  background: linear-gradient(#840000, #ff0000);
+  border: 2px solid #a5000085;
+  box-shadow: 5px 5px 10px #ffdede inset, -5px -5px 10px #ff8787 inset;
+}
+
+@mixin blue_btn {
+  @include buttons();
+  background: linear-gradient(#000484, #0026ff);
+  border: 2px solid #2622ff85;
+  box-shadow: 5px 5px 10px #e0deff inset, -5px -5px 10px #4842fb inset;
+}
+
+@mixin orenge_btn {
+  @include buttons();
+  background: linear-gradient(#845400, #ffa600);
+  border: 2px solid #ffb22285;
+  box-shadow: 5px 5px 10px #fff4de inset, -5px -5px 10px #fbab42 inset;
+}
+
+.start_btn {
+  @include green_btn();
   width: 100%;
 }
 
-.red_btn {
-  @include buttons();
-  display: flex;
-  justify-content: center;
-  background-color: darkred;
+.all_in_btn {
+  @include red_btn();
   width: 50%;
   margin-left: 4px;
 }
 
-.blue_btn {
-  @include buttons();
-  display: flex;
-  justify-content: center;
-  background-color: darkblue;
+.reset_btn {
+  @include blue_btn();
   width: 50%;
   margin-right: 4px;
+}
+
+.surrender_btn {
+  @include blue_btn();
+  width: 150px;
+}
+
+.stand_btn {
+  @include red_btn();
+  width: 100px;
+}
+
+.hit_btn {
+  @include green_btn();
+  width: 100px;
+}
+
+.duble_btn {
+  @include orenge_btn();
+  width: 150px;
 }
 
 /* Table */

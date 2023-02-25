@@ -15,9 +15,9 @@ const AllInButton = () => {
   };
 
   return (
-    <button className={styles.red_btn} type='button' onClick={handleClick}>
+    <button className={styles.all_in_btn} type='button' onClick={handleClick}>
       <Image src='images/money_icon.svg' alt='money icon' width={20} height={20} />
-      <p className='ml-2'>All In</p>
+      <p className='ml-2'>ALL IN</p>
     </button>
   );
 };
