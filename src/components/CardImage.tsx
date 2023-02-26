@@ -15,7 +15,7 @@ const Card: React.FC<Props> = ({ suit, rank, open }) => {
       if (!openCards) {
         setTimeout(() => {
           setOpenCards(true);
-        }, 2000);
+        }, 1000);
       }
     }
   }, [open, openCards]);

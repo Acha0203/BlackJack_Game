@@ -21,7 +21,9 @@ const DealerArea: React.FC<Props> = ({ house }) => {
         <p className='text-3xl text-white p-2'>Dealer</p>
       </div>
       <div className='text-center'>
-        <p className='text-lg text-white p-2'>Score: {house.getHandScore()}</p>
+        <p className='text-lg text-white p-2'>
+          Score: {house.gameStatus !== 'waiting' ? house.getHandScore() : '?'}
+        </p>
       </div>
       <GameState player={house} />
       <DealerHand house={house} />

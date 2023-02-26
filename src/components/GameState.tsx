@@ -28,6 +28,14 @@ const GameState: React.FC<Props> = ({ player }) => {
         <div className='bg-lime-500 rounded-md text-center w-32 mb-4'>
           <p className='text-lg text-white p-1'>Hit</p>
         </div>
+      ) : player.gameStatus === 'bust' ? (
+        <div className='bg-pink-500 rounded-md text-center w-32 mb-4'>
+          <p className='text-lg text-white p-1'>Bust</p>
+        </div>
+      ) : player.gameStatus === 'broken' ? (
+        <div className='bg-gray-800 rounded-md text-center w-32 mb-4'>
+          <p className='text-lg text-white p-1'>Broken</p>
+        </div>
       ) : (
         <div className='bg-gray-500 rounded-md text-center w-32 mb-4'>
           <p className='text-lg text-white p-1'>Waiting</p>

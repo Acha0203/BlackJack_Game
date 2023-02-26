@@ -32,52 +32,50 @@ const BlackjackGame = () => {
     },
   ];
 
-  const renderTable = useCallback(
-    (table: Table) => {
-      table.players[0].name = userName;
-      table.deck.generateDeck();
-      table.deck.shuffle();
-    },
-    [userName],
-  );
+  const promptUser = useCallback(() => {
+    if (table.players[0].gameStatus === 'betting') {
+      setShowBettingWindow(true);
+    }
+  }, [table.players]);
+
+  const gameStart = useCallback(() => {
+    table.players[0].name = userName;
+    table.deck.shuffle();
+    promptUser();
+  }, [promptUser, table, userName]);
 
   const handleClick = () => {
     table.players[0].bet = bet;
+    table.turnCounter++;
     table.players[0].gameStatus = 'waiting';
-    // テスト用
-    table.deck.generateDeck();
-    table.deck.shuffle();
-    for (let i = 0; i < table.players.length; i++) {
-      for (let j = 0; j < 2; j++) {
-        const card = table.deck.drawOne();
-        console.log(card);
-        if (card !== undefined) {
-          table.players[i].hand.push(card);
-        }
-      }
-    }
-
-    for (let i = 0; i < 2; i++) {
-      const card = table.deck.drawOne();
-      if (card !== undefined) {
-        table.house.hand.push(card);
-      }
-    }
-
-    console.log(JSON.parse(JSON.stringify(table.players[1].hand)));
-    ai1Hand = JSON.parse(JSON.stringify(table.players[1].hand));
-    console.log(ai1Hand);
-    // ここまでテスト用
-
     setShowBettingWindow(false);
 
-    console.log(table.players);
-    console.log(showBettingWindow);
+    while (table.gamePhase === 'betting') {
+      table.haveTurn(0);
+    }
+
+    table.blackjackAssignPlayerHands();
+    dispatch(blackjackActions.setUserHand(JSON.parse(JSON.stringify(table.players[0].hand))));
+    dispatch(blackjackActions.setAi1Hand(JSON.parse(JSON.stringify(table.players[1].hand))));
+    dispatch(blackjackActions.setAi2Hand(JSON.parse(JSON.stringify(table.players[2].hand))));
+    dispatch(blackjackActions.setHouseHand(JSON.parse(JSON.stringify(table.house.hand))));
+  };
+
+  const hit = () => {
+    table.players[0].gameStatus = 'hit';
+    table.evaluateMove(table.players[0]);
+    console.log(table.players[0]);
+    dispatch(blackjackActions.setUserHand(JSON.parse(JSON.stringify(table.players[0].hand))));
+    table.turnCounter++;
+
+    table.haveTurn(0);
   };
 
   useEffect(() => {
-    renderTable(table);
-  }, [renderTable, table]);
+    gameStart();
+    console.log(table.players);
+    console.log(table.players[0].hand);
+  }, [gameStart, table.players]);
 
   return (
     <div>
@@ -100,7 +98,7 @@ const BlackjackGame = () => {
             </button>
           </div>
           <div className='m-5'>
-            <button className={styles.hit_btn}>
+            <button className={styles.hit_btn} onClick={hit}>
               <p className='text-white'>HIT</p>
             </button>
           </div>

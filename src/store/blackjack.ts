@@ -1,10 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { CardObj } from '@/types';
 
 const initialBJState = {
   userName: '',
   gameType: 'Blackjack',
   chips: 400,
   bet: 0,
+  userHand: [],
+  ai1Hand: [],
+  ai2Hand: [],
+  houseHand: [],
 };
 
 const blackjackSlice = createSlice({
@@ -28,6 +33,18 @@ const blackjackSlice = createSlice({
     },
     resetBet: (state: { bet: number }) => {
       state.bet = 0;
+    },
+    setUserHand: (state: { userHand: CardObj[] }, action: { payload: CardObj[] }) => {
+      state.userHand = action.payload;
+    },
+    setAi1Hand: (state: { ai1Hand: CardObj[] }, action: { payload: CardObj[] }) => {
+      state.ai1Hand = action.payload;
+    },
+    setAi2Hand: (state: { ai2Hand: CardObj[] }, action: { payload: CardObj[] }) => {
+      state.ai2Hand = action.payload;
+    },
+    setHouseHand: (state: { houseHand: CardObj[] }, action: { payload: CardObj[] }) => {
+      state.houseHand = action.payload;
     },
   },
 });

@@ -117,14 +117,14 @@ export class Player {
   }
 
   /*
-      ?String userData : モデル外から渡されるパラメータ。nullになることもあります。
+      ?Number userData : モデル外から渡されるパラメータ。nullになることもあります。
       Number houseCard : ハウスの表向きのカードのランク。
       return GameDecision : 状態を考慮した上で、プレイヤーが行った決定。
 
         このメソッドは、どのようなベットやアクションを取るべきかというプレイヤーの決定を取得します。プレイヤーのタイプ、ハンド、チップの状態を読み取り、GameDecisionを返します。パラメータにuserData使うことによって、プレイヤーが「user」の場合、このメソッドにユーザーの情報を渡すことができますし、プレイヤーが 「ai」の場合、 userDataがデフォルトとしてnullを使います。
     */
 
-  promptPlayer(userData: string | null, houseCard: number): GameDecision {
+  promptPlayer(userData: number | null, houseCard: number | null): GameDecision {
     let action = '';
     const hand = this.getHandScore();
 
@@ -132,12 +132,14 @@ export class Player {
       if (this.gameStatus === 'betting') {
         let bet = Math.floor((Math.random() * (this.chips + 1 - 1) + 1) / 5) * 5;
         this.bet = bet < this.chips ? bet : this.chips;
-        console.log('bet: ' + this.bet);
         action = 'waiting';
         this.gameStatus = 'waiting';
       } else if (this.gameStatus === 'waiting' || this.gameStatus === 'hit') {
         if (this.hand.length <= 2) {
-          if (houseCard >= 10 && hand < 20) {
+          if (houseCard === null) {
+            action = 'waiting';
+            this.gameStatus = 'waiting';
+          } else if (houseCard >= 10 && hand < 20) {
             action = 'surrender';
             this.gameStatus = 'surrender';
           } else if (hand >= 17) {
@@ -177,7 +179,7 @@ export class Player {
       }
     } else {
       if (userData !== null) {
-        action = userData;
+        action = this.gameStatus;
       }
     }
 
@@ -274,7 +276,12 @@ export class Table {
         プレイヤーが「ヒット」し、手札が21以上の場合、gameStatusを「バスト」に設定し、チップからベットを引きます。
     */
   evaluateMove(player: Player): void {
-    let dicision = player.promptPlayer(null, this.house.hand[0].getRankNumber());
+    const houseScore = this.house.hand[0] === undefined ? null : this.house.hand[0].getRankNumber();
+
+    let dicision =
+      player.type === 'user'
+        ? player.promptPlayer(0, houseScore)
+        : player.promptPlayer(null, houseScore);
 
     switch (dicision.action) {
       case 'hit':
@@ -448,40 +455,44 @@ export class Table {
       Number userData : テーブルモデルの外部から渡されるデータです。 
       return Null : このメソッドはテーブルの状態を更新するだけで、値を返しません。
     */
-  haveTurn(userData: string): void {
+  haveTurn(userData: number): void {
     let turnPlayer = this.getTurnPlayer();
 
-    if (turnPlayer.gameStatus === 'broken') {
-      this.turnCounter++;
+    if (turnPlayer === this.players[userData]) {
       return;
-    }
+    } else {
+      if (turnPlayer.gameStatus === 'broken') {
+        this.turnCounter++;
+        return;
+      }
 
-    switch (this.gamePhase) {
-      case 'betting':
-        this.evaluateMove(turnPlayer);
-        if (this.onLastPlayer()) {
-          this.gamePhase = 'acting';
-        }
-        this.turnCounter++;
-        return;
-      case 'acting':
-        this.evaluateMove(turnPlayer);
-        if (this.allPlayerActionsResolved()) {
-          this.gamePhase = 'evaluatingWinners';
-        }
-        this.turnCounter++;
-        return;
-      case 'evaluatingWinners':
-        while (this.house.gameStatus !== 'stand' && this.house.gameStatus !== 'bust') {
-          this.evaluateMove(this.house);
-        }
-        this.resultsLog.push(this.blackjackEvaluateAndGetRoundResults());
-        this.gamePhase = 'roundOver';
-        return;
-      case 'roundOver':
-        this.blackjackClearPlayerHandsAndBets();
-        this.gamePhase = 'betting';
-        return;
+      switch (this.gamePhase) {
+        case 'betting':
+          this.evaluateMove(turnPlayer);
+          if (this.onLastPlayer()) {
+            this.gamePhase = 'acting';
+          }
+          this.turnCounter++;
+          return;
+        case 'acting':
+          this.evaluateMove(turnPlayer);
+          if (this.allPlayerActionsResolved()) {
+            this.gamePhase = 'evaluatingWinners';
+          }
+          this.turnCounter++;
+          return;
+        case 'evaluatingWinners':
+          while (this.house.gameStatus !== 'stand' && this.house.gameStatus !== 'bust') {
+            this.evaluateMove(this.house);
+          }
+          this.resultsLog.push(this.blackjackEvaluateAndGetRoundResults());
+          this.gamePhase = 'roundOver';
+          return;
+        case 'roundOver':
+          this.blackjackClearPlayerHandsAndBets();
+          this.gamePhase = 'betting';
+          return;
+      }
     }
   }
 
