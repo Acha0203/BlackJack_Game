@@ -134,37 +134,37 @@ export class Player {
         this.bet = bet < this.chips ? bet : this.chips;
         action = 'waiting';
         this.gameStatus = 'waiting';
-      } else if (this.gameStatus === 'waiting' || this.gameStatus === 'hit') {
-        if (this.hand.length <= 2) {
-          if (houseCard === null) {
-            action = 'waiting';
-            this.gameStatus = 'waiting';
-          } else if (hand >= 17) {
-            action = 'stand';
-            this.gameStatus = 'stand';
-          } else if (hand === 10 || hand === 11) {
-            if (this.chips >= this.bet * 2) {
-              action = 'double';
-              this.gameStatus = 'double';
-            } else {
-              action = 'hit';
-              this.gameStatus = 'hit';
-            }
+      } else if (this.gameStatus === 'waiting' || this.gameStatus === 'blackjack') {
+        if (houseCard === null) {
+          // 何もしない
+        } else if (hand === 10 || hand === 11) {
+          if (this.chips >= this.bet * 2) {
+            action = 'double';
+            this.gameStatus = 'double';
           } else {
             action = 'hit';
             this.gameStatus = 'hit';
           }
+        } else if (hand >= 17) {
+          action = 'stand';
+          this.gameStatus = 'stand';
+        } else if (houseCard === 11 && this.gameStatus !== 'blackjack') {
+          action = 'surrender';
+          this.gameStatus = 'surrender';
         } else {
-          if (hand <= 21 && hand >= 17) {
-            action = 'stand';
-            this.gameStatus = 'stand';
-          } else if (hand <= 21 && hand < 17) {
-            action = 'hit';
-            this.gameStatus = 'hit';
-          }
+          action = 'hit';
+          this.gameStatus = 'hit';
+        }
+      } else if (this.gameStatus === 'hit') {
+        if (hand <= 21 && hand >= 17) {
+          action = 'stand';
+          this.gameStatus = 'stand';
+        } else if (hand <= 21 && hand < 17) {
+          action = 'hit';
+          this.gameStatus = 'hit';
         }
       } else {
-        console.log('gameStatus: ' + this.gameStatus);
+        console.log('player: ' + this.name + ' gameStatus: ' + this.gameStatus);
       }
     } else if (this.type === 'house') {
       if (hand >= 17) {
@@ -412,6 +412,9 @@ export class Table {
           player.hand.push(card);
         }
       }
+      if (this.isBlackJack(player)) {
+        player.gameStatus = 'blackjack';
+      }
     }
 
     while (this.house.hand.length < 2) {
@@ -456,6 +459,7 @@ export class Table {
     let turnPlayer = this.getTurnPlayer();
 
     if (turnPlayer === this.players[userData]) {
+      this.turnCounter++;
       return;
     } else {
       if (turnPlayer.gameStatus === 'broken') {
@@ -513,7 +517,7 @@ export class Table {
   allPlayerActionsResolved(): boolean {
     let resolved = 0;
 
-    for (let i = 0; i < this.players.length; i++) {
+    for (let i = 1; i < this.players.length; i++) {
       if (
         this.players[i].gameStatus === 'broken' ||
         this.players[i].gameStatus === 'bust' ||
@@ -524,6 +528,6 @@ export class Table {
         resolved++;
     }
 
-    return resolved === this.players.length;
+    return resolved === this.players.length - 1;
   }
 }

@@ -182,7 +182,7 @@ $color: #ffffff;
   width: 100px;
 }
 
-.duble_btn {
+.double_btn {
   @include orenge_btn();
   width: 150px;
 }
@@ -224,7 +224,7 @@ $card-mark-position-top: 35px;
   .front {
     position: absolute;
     transition: all 0.5s;
-    left: 0;
+    left: 10px;
     top: 0;
     width: 100%;
     height: 100%;

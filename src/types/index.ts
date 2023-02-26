@@ -16,6 +16,10 @@ export type BlackjackState = {
     ai1HandScore: number;
     ai2HandScore: number;
     houseHandScore: number;
+    unableStand: boolean;
+    unableHit: boolean;
+    unableSurrender: boolean;
+    unableDouble: boolean;
   };
 };
 

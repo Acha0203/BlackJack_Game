@@ -18,6 +18,10 @@ const initialBJState = {
   ai1HandScore: 0,
   ai2HandScore: 0,
   houseHandScore: 0,
+  unableStand: false,
+  unableHit: false,
+  unableSurrender: false,
+  unableDouble: false,
 };
 
 const blackjackSlice = createSlice({
@@ -77,6 +81,18 @@ const blackjackSlice = createSlice({
     },
     setHouseHandScore: (state: { houseHandScore: number }, action: { payload: number }) => {
       state.houseHandScore = action.payload;
+    },
+    setUnableStand: (state: { unableStand: boolean }, action: { payload: boolean }) => {
+      state.unableStand = action.payload;
+    },
+    setUnableHit: (state: { unableHit: boolean }, action: { payload: boolean }) => {
+      state.unableHit = action.payload;
+    },
+    setUnableSurrender: (state: { unableSurrender: boolean }, action: { payload: boolean }) => {
+      state.unableSurrender = action.payload;
+    },
+    setUnableDouble: (state: { unableDouble: boolean }, action: { payload: boolean }) => {
+      state.unableDouble = action.payload;
     },
   },
 });
