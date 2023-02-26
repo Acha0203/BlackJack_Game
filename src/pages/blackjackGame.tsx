@@ -18,6 +18,8 @@ const BlackjackGame = () => {
   const gameType = useSelector((state: BlackjackState) => state.blackjack.gameType);
   const bet = useSelector((state: BlackjackState) => state.blackjack.bet);
   const userGameStatus = useSelector((state: BlackjackState) => state.blackjack.userGameStatus);
+  const ai1GameStatus = useSelector((state: BlackjackState) => state.blackjack.ai1GameStatus);
+  const ai2GameStatus = useSelector((state: BlackjackState) => state.blackjack.ai2GameStatus);
   const [showBettingWindow, setShowBettingWindow] = useState(false);
   const table = useMemo(() => new Table(gameType), [gameType]);
 
@@ -167,9 +169,25 @@ const BlackjackGame = () => {
     loopHaveTurnWhileEvaluatingWinners();
   }, [dispatch, loopHaveTurnWhileEvaluatingWinners, table.house]);
 
-  useEffect(() => {
-    gameStart();
+  // すべてのプレイヤーがアクションを完了しているかどうか
+  const allPlayerActionsResolved = useCallback((): boolean => {
+    return (
+      (ai1GameStatus === 'stand' ||
+        ai1GameStatus === 'bust' ||
+        ai1GameStatus === 'double' ||
+        ai1GameStatus === 'surrender') &&
+      (ai2GameStatus === 'stand' ||
+        ai2GameStatus === 'bust' ||
+        ai2GameStatus === 'double' ||
+        ai2GameStatus === 'surrender') &&
+      (userGameStatus === 'stand' ||
+        userGameStatus === 'bust' ||
+        userGameStatus === 'double' ||
+        userGameStatus === 'surrender')
+    );
+  }, [ai1GameStatus, ai2GameStatus, userGameStatus]);
 
+  useEffect(() => {
     // bustならすべてのボタンをdisabledにする
     if (userGameStatus === 'bust') {
       dispatch(blackjackActions.setUnableSurrender(true));
@@ -177,17 +195,17 @@ const BlackjackGame = () => {
       dispatch(blackjackActions.setUnableHit(true));
       dispatch(blackjackActions.setUnableDouble(true));
     }
+  }, [dispatch, userGameStatus]);
 
-    if (
-      table.allPlayerActionsResolved() &&
-      (userGameStatus === 'stand' ||
-        userGameStatus === 'bust' ||
-        userGameStatus === 'double' ||
-        userGameStatus === 'surrender')
-    ) {
+  useEffect(() => {
+    gameStart();
+  }, [gameStart]);
+
+  useEffect(() => {
+    if (allPlayerActionsResolved()) {
       openHouseHand();
     }
-  }, [dispatch, gameStart, openHouseHand, table, userGameStatus]);
+  }, [allPlayerActionsResolved, gameStart, openHouseHand]);
 
   return (
     <div>
