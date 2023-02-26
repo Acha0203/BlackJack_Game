@@ -20,6 +20,7 @@ export type BlackjackState = {
     unableHit: boolean;
     unableSurrender: boolean;
     unableDouble: boolean;
+    roundResults: string[];
   };
 };
 

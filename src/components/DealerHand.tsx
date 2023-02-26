@@ -10,10 +10,11 @@ interface Props {
 
 const DealerHand: React.FC<Props> = ({ house }) => {
   const houseHand = useSelector((state: BlackjackState) => state.blackjack.houseHand);
+  const houseGameStatus = useSelector((state: BlackjackState) => state.blackjack.houseGameStatus);
 
   return (
     <div className='flex justify-center items-center'>
-      {house.gameStatus === 'waiting' && house.hand.length > 0 ? (
+      {houseGameStatus === 'waiting' && house.hand.length > 0 ? (
         <div className='grid grid-cols-5 gap-1 w-32'>
           <div>
             <CardImage
@@ -36,7 +37,12 @@ const DealerHand: React.FC<Props> = ({ house }) => {
         <div className='grid grid-cols-5 gap-1 w-40'>
           {houseHand.map((card: { suit: string; rank: string }) => {
             return (
-              <CardImage key={card.suit + card.rank} suit={card.suit} rank={card.rank} open={true} />
+              <CardImage
+                key={card.suit + card.rank}
+                suit={card.suit}
+                rank={card.rank}
+                open={true}
+              />
             );
           })}
         </div>

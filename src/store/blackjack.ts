@@ -22,6 +22,7 @@ const initialBJState = {
   unableHit: false,
   unableSurrender: false,
   unableDouble: false,
+  roundResults: [],
 };
 
 const blackjackSlice = createSlice({
@@ -93,6 +94,9 @@ const blackjackSlice = createSlice({
     },
     setUnableDouble: (state: { unableDouble: boolean }, action: { payload: boolean }) => {
       state.unableDouble = action.payload;
+    },
+    setRoundResults: (state: { roundResults: string[] }, action: { payload: string[] }) => {
+      state.roundResults = action.payload;
     },
   },
 });

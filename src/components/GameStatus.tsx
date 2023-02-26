@@ -46,15 +46,31 @@ const GameStatus: React.FC<Props> = ({ playerName }) => {
           <p className='text-lg text-white p-1'>Hit</p>
         </div>
       ) : gameStatus === 'bust' ? (
-        <div className='bg-pink-500 rounded-md text-center w-32 mb-4'>
+        <div className='bg-gray-500 rounded-md text-center w-32 mb-4'>
           <p className='text-lg text-white p-1'>Bust</p>
         </div>
       ) : gameStatus === 'broken' ? (
         <div className='bg-gray-800 rounded-md text-center w-32 mb-4'>
           <p className='text-lg text-white p-1'>Broken</p>
         </div>
+      ) : gameStatus === 'blackjack' ? (
+        <div className='bg-gradient-to-r from-cyan-500 to-blue-500 rounded-md text-center w-32 mb-4'>
+          <p className='text-lg text-white p-1'>Blackjack</p>
+        </div>
+      ) : gameStatus === 'win' ? (
+        <div className='bg-gradient-to-r from-yellow-500 to-pink-500 rounded-md text-center w-32 mb-4'>
+          <p className='text-lg text-white p-1'>Win</p>
+        </div>
+      ) : gameStatus === 'lose' ? (
+        <div className='bg-gray-700 rounded-md text-center w-32 mb-4'>
+          <p className='text-lg text-white p-1'>Lose</p>
+        </div>
+      ) : gameStatus === 'push' ? (
+        <div className='bg-green-600 rounded-md text-center w-32 mb-4'>
+          <p className='text-lg text-white p-1'>Push</p>
+        </div>
       ) : (
-        <div className='bg-gray-500 rounded-md text-center w-32 mb-4'>
+        <div className='bg-indigo-400 rounded-md text-center w-32 mb-4'>
           <p className='text-lg text-white p-1'>Waiting</p>
         </div>
       )}

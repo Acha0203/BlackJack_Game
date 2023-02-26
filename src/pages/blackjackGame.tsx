@@ -21,35 +21,37 @@ const BlackjackGame = () => {
   const [showBettingWindow, setShowBettingWindow] = useState(false);
   const table = useMemo(() => new Table(gameType), [gameType]);
 
-  const updateUser = () => {
+  const updateUser = useCallback(() => {
     dispatch(blackjackActions.setUserHand(JSON.parse(JSON.stringify(table.players[0].hand))));
     dispatch(blackjackActions.setUserHandScore(table.players[0].getHandScore()));
     setTimeout(() => {
       dispatch(blackjackActions.setUserGameStatus(table.players[0].gameStatus));
     }, 500);
-  };
+  }, [dispatch, table.players]);
 
-  const updateAi1 = () => {
+  const updateAi1 = useCallback(() => {
     dispatch(blackjackActions.setAi1Hand(JSON.parse(JSON.stringify(table.players[1].hand))));
     dispatch(blackjackActions.setAi1HandScore(table.players[1].getHandScore()));
     setTimeout(() => {
       dispatch(blackjackActions.setAi1GameStatus(table.players[1].gameStatus));
     }, 1500);
-  };
+  }, [dispatch, table.players]);
 
-  const updateAi2 = () => {
+  const updateAi2 = useCallback(() => {
     dispatch(blackjackActions.setAi2Hand(JSON.parse(JSON.stringify(table.players[2].hand))));
     dispatch(blackjackActions.setAi2HandScore(table.players[2].getHandScore()));
     setTimeout(() => {
       dispatch(blackjackActions.setAi2GameStatus(table.players[2].gameStatus));
     }, 1500);
-  };
+  }, [dispatch, table.players]);
 
-  const updateHouse = () => {
+  const updateHouse = useCallback(() => {
     dispatch(blackjackActions.setHouseHand(JSON.parse(JSON.stringify(table.house.hand))));
     dispatch(blackjackActions.setHouseHandScore(table.house.getHandScore()));
-    dispatch(blackjackActions.setHouseGameStatus(table.house.gameStatus));
-  };
+    setTimeout(() => {
+      dispatch(blackjackActions.setHouseGameStatus(table.house.gameStatus));
+    }, 1500);
+  }, [dispatch, table.house]);
 
   const promptUser = useCallback(() => {
     if (table.players[0].gameStatus === 'betting') {
@@ -73,6 +75,7 @@ const BlackjackGame = () => {
       table.haveTurn(0);
     }
 
+    // カードを配る処理
     table.blackjackAssignPlayerHands();
     updateUser();
     updateAi1();
@@ -80,9 +83,7 @@ const BlackjackGame = () => {
     updateHouse();
 
     // カードを1枚ずつ開く処理
-    loopHaveTurn();
-
-    console.log(table.players);
+    loopHaveTurnWhileAiAction();
   };
 
   // カードを1枚ずつ開く処理
@@ -90,7 +91,8 @@ const BlackjackGame = () => {
     return new Promise((resolve) => setTimeout(resolve, milliseconds));
   };
 
-  const loopHaveTurn = async () => {
+  // AIのアクション
+  const loopHaveTurnWhileAiAction = async () => {
     while (!table.allPlayerActionsResolved()) {
       table.haveTurn(0);
       await sleep(1500);
@@ -98,6 +100,25 @@ const BlackjackGame = () => {
       updateAi2();
     }
   };
+
+  const getRoundResults = useCallback(async () => {
+    await sleep(1500);
+    dispatch(blackjackActions.setRoundResults(table.resultsLog));
+    updateHouse();
+    updateAi1();
+    updateAi2();
+    updateUser();
+  }, [dispatch, table, updateAi1, updateAi2, updateHouse, updateUser]);
+
+  // 勝者決定
+  const loopHaveTurnWhileEvaluatingWinners = useCallback(async () => {
+    while (table.gamePhase !== 'roundOver') {
+      table.haveTurn(0);
+      await sleep(500);
+      updateHouse();
+    }
+    getRoundResults();
+  }, [getRoundResults, table, updateHouse]);
 
   const hit = () => {
     dispatch(blackjackActions.setUnableSurrender(true));
@@ -108,6 +129,7 @@ const BlackjackGame = () => {
   };
 
   const stand = () => {
+    // すべてのボタンをdisabledにする
     dispatch(blackjackActions.setUnableSurrender(true));
     dispatch(blackjackActions.setUnableStand(true));
     dispatch(blackjackActions.setUnableHit(true));
@@ -118,6 +140,7 @@ const BlackjackGame = () => {
   };
 
   const surrender = () => {
+    // すべてのボタンをdisabledにする
     dispatch(blackjackActions.setUnableSurrender(true));
     dispatch(blackjackActions.setUnableStand(true));
     dispatch(blackjackActions.setUnableHit(true));
@@ -128,6 +151,7 @@ const BlackjackGame = () => {
   };
 
   const double = () => {
+    // すべてのボタンをdisabledにする
     dispatch(blackjackActions.setUnableSurrender(true));
     dispatch(blackjackActions.setUnableStand(true));
     dispatch(blackjackActions.setUnableHit(true));
@@ -137,17 +161,33 @@ const BlackjackGame = () => {
     updateUser();
   };
 
+  const openHouseHand = useCallback(() => {
+    table.house.gameStatus = 'acting';
+    dispatch(blackjackActions.setHouseGameStatus('acting'));
+    loopHaveTurnWhileEvaluatingWinners();
+  }, [dispatch, loopHaveTurnWhileEvaluatingWinners, table.house]);
+
   useEffect(() => {
     gameStart();
+
+    // bustならすべてのボタンをdisabledにする
     if (userGameStatus === 'bust') {
       dispatch(blackjackActions.setUnableSurrender(true));
       dispatch(blackjackActions.setUnableStand(true));
       dispatch(blackjackActions.setUnableHit(true));
       dispatch(blackjackActions.setUnableDouble(true));
     }
-    console.log(table.players);
-    console.log(table.players[0].hand);
-  }, [dispatch, gameStart, table.players, userGameStatus]);
+
+    if (
+      table.allPlayerActionsResolved() &&
+      (userGameStatus === 'stand' ||
+        userGameStatus === 'bust' ||
+        userGameStatus === 'double' ||
+        userGameStatus === 'surrender')
+    ) {
+      openHouseHand();
+    }
+  }, [dispatch, gameStart, openHouseHand, table, userGameStatus]);
 
   return (
     <div>
