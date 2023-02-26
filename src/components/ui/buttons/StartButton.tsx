@@ -1,25 +1,18 @@
-import { useSelector } from 'react-redux';
-import { useAppDispatch } from '@/store';
-import { blackjackActions } from '@/store/blackjack';
-import { BlackjackState } from '@/types';
+import styles from '../../../styles/Home.module.scss'
 
-const StartButton = () => {
-  const dispatch = useAppDispatch();
-  const userName = useSelector((state: BlackjackState) => state.blackjack.userName);
+interface Props {
+  onClick: () => void;
+}
 
-  const handleClick = () => {
-    if (userName === '') {
-      dispatch(blackjackActions.setUserName('John Doe'));
-    }
-  };
+const StartButton: React.FC<Props> = ({ onClick }) => {
 
   return (
     <button
-      className='bg-green-700 hover:bg-lime-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-64'
+      className={styles.start_btn}
       type='button'
-      onClick={handleClick}
+      onClick={onClick}
     >
-      Game Start
+      GAME START
     </button>
   );
 };

@@ -1,16 +1,31 @@
-import Link from 'next/link';
-import { FormEventHandler } from 'react';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
 import styles from '../styles/Home.module.scss';
 import TitleSVG from '@/components/svgFiles/titleSVG';
 import InputText from '@/components/ui/InputText';
 import SelectGameType from '@/components/ui/SelectGameType';
 import StartButton from '@/components/ui/buttons/StartButton';
+import { useAppDispatch } from '@/store';
+import { blackjackActions } from '@/store/blackjack';
+import { BlackjackState } from '@/types';
 
 const Home = () => {
+  const dispatch = useAppDispatch();
+  const userName = useSelector((state: BlackjackState) => state.blackjack.userName);
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (userName === '') {
+      dispatch(blackjackActions.setUserName('You'));
+    }
+
+    router.push('/blackjackGame');
+  };
+
   return (
     <div className='flex justify-center items-center'>
       <form className='bg-white shadow-md rounded px-8 pt-6 pb-6'>
-        <div className={styles.cards}>
+        <div className={styles.cards_icon}>
           <div className='pt-14'>
             <TitleSVG />
           </div>
@@ -21,10 +36,8 @@ const Home = () => {
         <div className='inline-block relative w-64 mb-4'>
           <SelectGameType />
         </div>
-        <div className='flex items-center justify-center w-64'>
-          <Link href='/betting'>
-            <StartButton />
-          </Link>
+        <div className='flex items-center justify-center'>
+          <StartButton onClick={handleClick} />
         </div>
       </form>
     </div>

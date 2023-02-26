@@ -1,4 +1,4 @@
-.cards {
+.cards_icon {
   background: {
     image: linear-gradient(
         rgba(255, 255, 255, 0.5),
@@ -25,7 +25,7 @@
   filter: drop-shadow(5px 5px 5px #505050);
 }
 
-/* Chips */
+/* Chip Button */
 .chip {
   position: absolute;
   top: 50%;
@@ -60,7 +60,13 @@ $color: #ffffff;
   }
 
   &:active {
-    top: 2px;
+    transform: translate(2px, 2px);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: translate(-2px, -2px);
   }
 }
 
@@ -74,4 +80,218 @@ $color: #ffffff;
   100% {
     background-position-x: -400%;
   }
+}
+
+/* Modal Window */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Button */
+@mixin buttons {
+  color: #ffffff;
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  border-radius: 9999px;
+  padding: {
+    top: 0.6rem;
+    bottom: 0.6rem;
+  }
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+
+  &:active {
+    transform: translate(2px, 2px);
+  }
+
+  &:disabled {
+    filter: brightness(0.5);
+    cursor: not-allowed;
+    transform: translate(-2px, -2px);
+  }
+}
+
+@mixin green_btn {
+  @include buttons();
+  background: linear-gradient(#005b11, #08a800);
+  border: 2px solid #3a7d4685;
+  box-shadow: 5px 5px 10px #deffe6 inset, -5px -5px 10px #56d266 inset;
+}
+
+@mixin red_btn {
+  @include buttons();
+  background: linear-gradient(#840000, #ff0000);
+  border: 2px solid #a5000085;
+  box-shadow: 5px 5px 10px #ffdede inset, -5px -5px 10px #ff8787 inset;
+}
+
+@mixin blue_btn {
+  @include buttons();
+  background: linear-gradient(#000484, #0026ff);
+  border: 2px solid #2622ff85;
+  box-shadow: 5px 5px 10px #e0deff inset, -5px -5px 10px #4842fb inset;
+}
+
+@mixin orenge_btn {
+  @include buttons();
+  background: linear-gradient(#845400, #ffa600);
+  border: 2px solid #ffb22285;
+  box-shadow: 5px 5px 10px #fff4de inset, -5px -5px 10px #fbab42 inset;
+}
+
+.start_btn {
+  @include green_btn();
+  width: 100%;
+}
+
+.all_in_btn {
+  @include red_btn();
+  width: 50%;
+  margin-left: 4px;
+}
+
+.reset_btn {
+  @include blue_btn();
+  width: 50%;
+  margin-right: 4px;
+}
+
+.surrender_btn {
+  @include blue_btn();
+  width: 150px;
+}
+
+.stand_btn {
+  @include red_btn();
+  width: 100px;
+}
+
+.hit_btn {
+  @include green_btn();
+  width: 100px;
+}
+
+.double_btn {
+  @include orenge_btn();
+  width: 150px;
+}
+
+/* Table */
+.bj_table_bg {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background: {
+    image: linear-gradient(rgba(0, 81, 34, 0.5), rgba(0, 81, 34, 0.5)),
+      url('../../public/images/black-jack-table.svg');
+    repeat: no-repeat;
+    position: top 20% left 0%;
+  }
+  padding-top: 20px;
+}
+
+/* Card */
+$card-width: 80px;
+$card-height: 110px;
+$card-rounded: 5px;
+$card-font-size-sm: 0.8rem;
+$card-font-size-lg: 2rem;
+$card-padding: 5px;
+$card-mark-position-left: 25px;
+$card-mark-position-top: 35px;
+
+.card {
+  position: relative;
+  width: $card-width;
+  height: $card-height;
+
+  /* カード裏面・表面の共通スタイル */
+  .back,
+  .front {
+    position: absolute;
+    transition: all 0.5s;
+    left: 10px;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+  }
+
+  /* カード表面のスタイル */
+  .front {
+    transform: perspective(400px) rotateY(-180deg);
+  }
+
+  /* 開いた時のカード裏面 */
+  .hide_back {
+    transform: perspective(400px) rotateY(180deg);
+  }
+
+  /* 開いた時のカード表面 */
+  .open_front {
+    transform: perspective(400px) rotateY(0);
+  }
+}
+
+.card_image {
+  position: absolute;
+  text-align: center;
+  width: $card-width;
+  height: $card-height;
+  border-radius: $card-rounded;
+  font-size: $card-font-size-lg;
+  background-color: #fff;
+  filter: drop-shadow(4px 4px 4px #0000004e);
+}
+
+/* カード表面のイメージ */
+.front_image {
+  text-align: center;
+  & span {
+    position: absolute;
+    left: $card-padding;
+    top: $card-padding;
+    font-size: $card-font-size-sm;
+    width: auto;
+  }
+
+  & div {
+    position: absolute;
+    left: $card-mark-position-left;
+    top: $card-mark-position-top;
+  }
+
+  & span:last-child {
+    position: absolute;
+    left: auto;
+    top: auto;
+    right: $card-padding;
+    bottom: $card-padding;
+    transform: rotate(180deg);
+  }
+}
+
+/* カード裏面のイメージ */
+.back_pattern {
+  position: absolute;
+  left: $card-padding;
+  top: $card-padding;
+  background-color: rgb(104, 133, 238);
+  width: $card-width - 10px;
+  height: $card-height - 10px;
 }

@@ -1,14 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import styles from '../../../styles/Home.module.scss';
+import { BlackjackState } from '@/types';
 
-const OKButton = () => {
-  const handleClick = () => {};
+interface Props {
+  onClick: () => void;
+}
+
+const OKButton: React.FC<Props> = ({ onClick }) => {
+  const bet = useSelector((state: BlackjackState) => state.blackjack.bet);
+  const [isNotBetting, setIsNotBetting] = useState(true);
+
+  useEffect(() => {
+    setIsNotBetting(bet === 0 ? true : false);
+  }, [bet]);
 
   return (
-    <button
-      className='bg-green-700 hover:bg-lime-600 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline w-full'
-      type='button'
-      onClick={handleClick}
-    >
+    <button className={styles.start_btn} type='button' onClick={onClick} disabled={isNotBetting}>
       OK
     </button>
   );
