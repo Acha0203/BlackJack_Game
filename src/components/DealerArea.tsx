@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import React from 'react';
 import DealerHand from './DealerHand';
-import GameState from './GameState';
+import GameStatus from './GameStatus';
 import { Player } from '@/model';
 
 interface Props {
@@ -25,7 +25,7 @@ const DealerArea: React.FC<Props> = ({ house }) => {
           Score: {house.gameStatus !== 'waiting' ? house.getHandScore() : '?'}
         </p>
       </div>
-      <GameState player={house} />
+      <GameStatus playerName={house.name} />
       <DealerHand house={house} />
     </div>
   );

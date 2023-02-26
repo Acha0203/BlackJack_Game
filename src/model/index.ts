@@ -139,9 +139,6 @@ export class Player {
           if (houseCard === null) {
             action = 'waiting';
             this.gameStatus = 'waiting';
-          } else if (houseCard >= 10 && hand < 20) {
-            action = 'surrender';
-            this.gameStatus = 'surrender';
           } else if (hand >= 17) {
             action = 'stand';
             this.gameStatus = 'stand';

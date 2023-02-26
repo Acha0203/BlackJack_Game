@@ -1,12 +1,10 @@
 import { useRouter } from 'next/router';
-import { setCookie } from 'nookies';
 import { useSelector } from 'react-redux';
 import styles from '../styles/Home.module.scss';
 import TitleSVG from '@/components/svgFiles/titleSVG';
 import InputText from '@/components/ui/InputText';
 import SelectGameType from '@/components/ui/SelectGameType';
 import StartButton from '@/components/ui/buttons/StartButton';
-import { Player } from '@/model';
 import { useAppDispatch } from '@/store';
 import { blackjackActions } from '@/store/blackjack';
 import { BlackjackState } from '@/types';
@@ -14,23 +12,13 @@ import { BlackjackState } from '@/types';
 const Home = () => {
   const dispatch = useAppDispatch();
   const userName = useSelector((state: BlackjackState) => state.blackjack.userName);
-  const gameType = useSelector((state: BlackjackState) => state.blackjack.gameType);
   const router = useRouter();
-  // const user = new Player(userName, 'user', gameType);
 
   const handleClick = () => {
     if (userName === '') {
       dispatch(blackjackActions.setUserName('You'));
     }
-    // user.name = userName;
-    // user.gameType = gameType;
 
-    // Cookieを使ってuserインスタンスを遷移先に渡す
-    // setCookie(null, 'user', JSON.stringify(user), {
-    //   maxAge: 30 * 24 * 60 * 60, // 30日間有効
-    //   path: '/', // すべてのページでCookieを利用可能にするため、ルートパスにセット
-    //   sameSite: 'lax',
-    // });
     router.push('/blackjackGame');
   };
 

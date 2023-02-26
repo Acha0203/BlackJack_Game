@@ -10,6 +10,14 @@ const initialBJState = {
   ai1Hand: [],
   ai2Hand: [],
   houseHand: [],
+  userGameStatus: 'betting',
+  ai1GameStatus: 'betting',
+  ai2GameStatus: 'betting',
+  houseGameStatus: 'waiting',
+  userHandScore: 0,
+  ai1HandScore: 0,
+  ai2HandScore: 0,
+  houseHandScore: 0,
 };
 
 const blackjackSlice = createSlice({
@@ -45,6 +53,30 @@ const blackjackSlice = createSlice({
     },
     setHouseHand: (state: { houseHand: CardObj[] }, action: { payload: CardObj[] }) => {
       state.houseHand = action.payload;
+    },
+    setUserGameStatus: (state: { userGameStatus: string }, action: { payload: string }) => {
+      state.userGameStatus = action.payload;
+    },
+    setAi1GameStatus: (state: { ai1GameStatus: string }, action: { payload: string }) => {
+      state.ai1GameStatus = action.payload;
+    },
+    setAi2GameStatus: (state: { ai2GameStatus: string }, action: { payload: string }) => {
+      state.ai2GameStatus = action.payload;
+    },
+    setHouseGameStatus: (state: { houseGameStatus: string }, action: { payload: string }) => {
+      state.houseGameStatus = action.payload;
+    },
+    setUserHandScore: (state: { userHandScore: number }, action: { payload: number }) => {
+      state.userHandScore = action.payload;
+    },
+    setAi1HandScore: (state: { ai1HandScore: number }, action: { payload: number }) => {
+      state.ai1HandScore = action.payload;
+    },
+    setAi2HandScore: (state: { ai2HandScore: number }, action: { payload: number }) => {
+      state.ai2HandScore = action.payload;
+    },
+    setHouseHandScore: (state: { houseHandScore: number }, action: { payload: number }) => {
+      state.houseHandScore = action.payload;
     },
   },
 });

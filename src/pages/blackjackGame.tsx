@@ -9,28 +9,36 @@ import { blackjackActions } from '@/store/blackjack';
 import { BlackjackState } from '@/types';
 
 const BlackjackGame = () => {
-  // Cookieを使ってuserインスタンスを受け取る
-  // const cookies = parseCookies();
-  // const userObj = JSON.parse(cookies.user);
-  // オブジェクトリテラルの形で渡されるため、クラスインスタンスに復元する
-  // const user = new Player(userObj.name, userObj.type, userObj.gameType, userObj.chips);
   const dispatch = useDispatch();
   const userName = useSelector((state: BlackjackState) => state.blackjack.userName);
   const gameType = useSelector((state: BlackjackState) => state.blackjack.gameType);
   const bet = useSelector((state: BlackjackState) => state.blackjack.bet);
   const [showBettingWindow, setShowBettingWindow] = useState(false);
   const table = useMemo(() => new Table(gameType), [gameType]);
-  // テスト用
-  let ai1Hand = [
-    {
-      suit: '♥︎',
-      rank: 'A',
-    },
-    {
-      suit: '♠',
-      rank: 'K',
-    },
-  ];
+
+  const updateUser = () => {
+    dispatch(blackjackActions.setUserGameStatus(table.players[0].gameStatus));
+    dispatch(blackjackActions.setUserHand(JSON.parse(JSON.stringify(table.players[0].hand))));
+    dispatch(blackjackActions.setUserHandScore(table.players[0].getHandScore()));
+  };
+
+  const updateAi1 = () => {
+    dispatch(blackjackActions.setAi1GameStatus(table.players[1].gameStatus));
+    dispatch(blackjackActions.setAi1Hand(JSON.parse(JSON.stringify(table.players[1].hand))));
+    dispatch(blackjackActions.setAi1HandScore(table.players[1].getHandScore()));
+  };
+
+  const updateAi2 = () => {
+    dispatch(blackjackActions.setAi2GameStatus(table.players[2].gameStatus));
+    dispatch(blackjackActions.setAi2Hand(JSON.parse(JSON.stringify(table.players[2].hand))));
+    dispatch(blackjackActions.setAi2HandScore(table.players[2].getHandScore()));
+  };
+
+  const updateHouse = () => {
+    dispatch(blackjackActions.setHouseGameStatus(table.house.gameStatus));
+    dispatch(blackjackActions.setHouseHand(JSON.parse(JSON.stringify(table.house.hand))));
+    dispatch(blackjackActions.setHouseHandScore(table.house.getHandScore()));
+  };
 
   const promptUser = useCallback(() => {
     if (table.players[0].gameStatus === 'betting') {
@@ -55,20 +63,21 @@ const BlackjackGame = () => {
     }
 
     table.blackjackAssignPlayerHands();
-    dispatch(blackjackActions.setUserHand(JSON.parse(JSON.stringify(table.players[0].hand))));
-    dispatch(blackjackActions.setAi1Hand(JSON.parse(JSON.stringify(table.players[1].hand))));
-    dispatch(blackjackActions.setAi2Hand(JSON.parse(JSON.stringify(table.players[2].hand))));
-    dispatch(blackjackActions.setHouseHand(JSON.parse(JSON.stringify(table.house.hand))));
+    updateUser();
+    updateAi1();
+    updateAi2();
+    updateHouse();
   };
 
   const hit = () => {
     table.players[0].gameStatus = 'hit';
     table.evaluateMove(table.players[0]);
     console.log(table.players[0]);
-    dispatch(blackjackActions.setUserHand(JSON.parse(JSON.stringify(table.players[0].hand))));
+    updateUser();
     table.turnCounter++;
 
     table.haveTurn(0);
+    updateAi1();
   };
 
   useEffect(() => {
