@@ -15,7 +15,7 @@ const DealerArea: React.FC<Props> = ({ house }) => {
   const houseHandScore = useSelector((state: BlackjackState) => state.blackjack.houseHandScore);
 
   return (
-    <div className='h-1/2 flex-col'>
+    <div className='flex-col h-72 mt-5'>
       <div className='flex justify-center items-center'>
         <Image
           src={`images/${house.type}_icon.svg`}

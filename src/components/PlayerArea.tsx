@@ -16,7 +16,7 @@ const PlayerArea: React.FC<Props> = ({ player }) => {
   const ai2HandScore = useSelector((state: BlackjackState) => state.blackjack.ai2HandScore);
 
   return (
-    <div className='flex-col justify-center items-start mx-10'>
+    <div className='flex-col justify-center items-start mx-10 h-72'>
       <div className='flex justify-center items-center'>
         <Image
           src={`images/${player.type}_icon.svg`}
