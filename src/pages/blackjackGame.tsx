@@ -10,7 +10,7 @@ import StandButton from '@/components/ui/buttons/StandButton';
 import SurrenderButton from '@/components/ui/buttons/SurrenderButton';
 import BettingWindow from '@/components/ui/window/BettingWindow';
 import GameOverWindow from '@/components/ui/window/GameOverWindow';
-import NextGameWindow from '@/components/ui/window/NextGameWindow';
+import NextRoundWindow from '@/components/ui/window/NextRoundWindow';
 import { Player, Table } from '@/model';
 import { blackjackActions } from '@/store/blackjack';
 import { BlackjackState } from '@/types';
@@ -24,16 +24,14 @@ const BlackjackGame = () => {
   const ai1GameStatus = useSelector((state: BlackjackState) => state.blackjack.ai1GameStatus);
   const ai2GameStatus = useSelector((state: BlackjackState) => state.blackjack.ai2GameStatus);
   const [showBettingWindow, setShowBettingWindow] = useState(false);
-  const [showNextGameWindow, setShowNextGameWindow] = useState(false);
+  const [showNextRoundWindow, setShowNextRoundWindow] = useState(false);
   const [showGameOverWindow, setShowGameOverWindow] = useState(false);
   const table = useMemo(() => new Table(gameType), [gameType]);
 
   const updateUser = useCallback(() => {
     dispatch(blackjackActions.setUserHand(JSON.parse(JSON.stringify(table.players[0].hand))));
     dispatch(blackjackActions.setUserHandScore(table.players[0].getHandScore()));
-    setTimeout(() => {
-      dispatch(blackjackActions.setUserGameStatus(table.players[0].gameStatus));
-    }, 500);
+    dispatch(blackjackActions.setUserGameStatus(table.players[0].gameStatus));
   }, [dispatch, table.players]);
 
   const updateAi1 = useCallback(() => {
@@ -54,12 +52,11 @@ const BlackjackGame = () => {
     dispatch(blackjackActions.setHouseGameStatus(table.house.gameStatus));
   }, [dispatch, table.house]);
 
+  // BettingWindowを表示する
   const promptUser = useCallback(() => {
-    if (table.players[0].gameStatus === 'betting') {
-      dispatch(blackjackActions.setChips(table.players[0].chips));
-      dispatch(blackjackActions.setBet(0));
-      setShowBettingWindow(true);
-    }
+    dispatch(blackjackActions.setChips(table.players[0].chips));
+    dispatch(blackjackActions.setBet(0));
+    setShowBettingWindow(true);
   }, [dispatch, table.players]);
 
   const gameStart = useCallback(() => {
@@ -68,7 +65,7 @@ const BlackjackGame = () => {
     updateAi1();
     updateAi2();
     updateHouse();
-    table.deck.shuffle();
+    table.deck.resetDeck();
     promptUser();
   }, [
     promptUser,
@@ -81,13 +78,12 @@ const BlackjackGame = () => {
     userName,
   ]);
 
-  const handleClick = () => {
+  const handleClickOK = () => {
     table.players[0].bet = bet;
     table.turnCounter++;
     table.players[0].gameStatus = 'waiting';
     dispatch(blackjackActions.setUserGameStatus('waiting'));
     setShowBettingWindow(false);
-    console.log(table.players[0]);
 
     while (table.gamePhase === 'betting') {
       table.haveTurn(0);
@@ -100,7 +96,6 @@ const BlackjackGame = () => {
     updateAi2();
     updateHouse();
 
-    console.log(table.players);
     // カードを1枚ずつ開く処理
     loopHaveTurnWhileAiAction();
   };
@@ -128,7 +123,7 @@ const BlackjackGame = () => {
     updateAi1();
     updateAi2();
     updateUser();
-    table.players[0].chips > 0 ? setShowNextGameWindow(true) : setShowGameOverWindow(true);
+    table.players[0].chips > 0 ? setShowNextRoundWindow(true) : setShowGameOverWindow(true);
   }, [dispatch, table, updateAi1, updateAi2, updateHouse, updateUser]);
 
   // 勝者決定
@@ -197,11 +192,13 @@ const BlackjackGame = () => {
       (ai1GameStatus === 'stand' ||
         ai1GameStatus === 'bust' ||
         ai1GameStatus === 'double' ||
-        ai1GameStatus === 'surrender') &&
+        ai1GameStatus === 'surrender' ||
+        ai1GameStatus === 'broken') &&
       (ai2GameStatus === 'stand' ||
         ai2GameStatus === 'bust' ||
         ai2GameStatus === 'double' ||
-        ai2GameStatus === 'surrender') &&
+        ai2GameStatus === 'surrender' ||
+        ai2GameStatus === 'broken') &&
       (userGameStatus === 'stand' ||
         userGameStatus === 'bust' ||
         userGameStatus === 'double' ||
@@ -209,10 +206,9 @@ const BlackjackGame = () => {
     );
   }, [ai1GameStatus, ai2GameStatus, userGameStatus]);
 
-  const startNextGame = () => {
-    setShowNextGameWindow(false);
+  const startNextRound = () => {
+    setShowNextRoundWindow(false);
     table.blackjackClearPlayerHandsAndBets();
-    console.log(table);
     dispatch(blackjackActions.setUnableSurrender(false));
     dispatch(blackjackActions.setUnableStand(false));
     dispatch(blackjackActions.setUnableHit(false));
@@ -221,13 +217,12 @@ const BlackjackGame = () => {
     updateAi1();
     updateAi2();
     updateHouse();
-    table.deck.shuffle();
+    console.log(table.deck.cards);
     promptUser();
   };
 
   const startNewGame = () => {
     setShowGameOverWindow(false);
-    console.log(table);
     dispatch(blackjackActions.setUnableSurrender(false));
     dispatch(blackjackActions.setUnableStand(false));
     dispatch(blackjackActions.setUnableHit(false));
@@ -272,12 +267,15 @@ const BlackjackGame = () => {
       </div>
       {showBettingWindow && (
         <div className={styles.overlay}>
-          <BettingWindow onClick={() => handleClick()} betDenominations={table.betDenominations} />
+          <BettingWindow
+            onClick={() => handleClickOK()}
+            betDenominations={table.betDenominations}
+          />
         </div>
       )}
-      {showNextGameWindow && (
+      {showNextRoundWindow && (
         <div className={styles.overlay}>
-          <NextGameWindow onClick={() => startNextGame()} />
+          <NextRoundWindow onClick={() => startNextRound()} />
         </div>
       )}
       {showGameOverWindow && (

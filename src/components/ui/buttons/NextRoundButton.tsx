@@ -5,12 +5,12 @@ interface Props {
   onClick: () => void;
 }
 
-const NextGameButton: React.FC<Props> = ({ onClick }) => {
+const NextRoundButton: React.FC<Props> = ({ onClick }) => {
   return (
     <button className={styles.start_btn} type='button' onClick={onClick}>
-      Next Game
+      Next Round
     </button>
   );
 };
 
-export default NextGameButton;
+export default NextRoundButton;

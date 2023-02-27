@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import NextGameButton from '../buttons/NextGameButton';
+import NextRoundButton from '../buttons/NextRoundButton';
 import LoseSVG from '@/components/svgFiles/loseSVG';
 import PushSVG from '@/components/svgFiles/pushSVG';
 import WinSVG from '@/components/svgFiles/winSVG';
@@ -10,7 +10,7 @@ interface Props {
   onClick: () => void;
 }
 
-const NextGameWindow: React.FC<Props> = ({ onClick }) => {
+const NextRoundWindow: React.FC<Props> = ({ onClick }) => {
   const winAmount = useSelector((state: BlackjackState) => state.blackjack.winAmount);
 
   return (
@@ -19,9 +19,9 @@ const NextGameWindow: React.FC<Props> = ({ onClick }) => {
       {winAmount < 0 && <LoseSVG />}
       {winAmount === 0 && <PushSVG />}
       <p className='text-xl mb-4'>{winAmount}</p>
-      <NextGameButton onClick={onClick} />
+      <NextRoundButton onClick={onClick} />
     </div>
   );
 };
 
-export default NextGameWindow;
+export default NextRoundWindow;
