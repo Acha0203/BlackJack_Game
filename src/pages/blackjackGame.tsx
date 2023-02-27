@@ -39,25 +39,19 @@ const BlackjackGame = () => {
   const updateAi1 = useCallback(() => {
     dispatch(blackjackActions.setAi1Hand(JSON.parse(JSON.stringify(table.players[1].hand))));
     dispatch(blackjackActions.setAi1HandScore(table.players[1].getHandScore()));
-    setTimeout(() => {
-      dispatch(blackjackActions.setAi1GameStatus(table.players[1].gameStatus));
-    }, 1500);
+    dispatch(blackjackActions.setAi1GameStatus(table.players[1].gameStatus));
   }, [dispatch, table.players]);
 
   const updateAi2 = useCallback(() => {
     dispatch(blackjackActions.setAi2Hand(JSON.parse(JSON.stringify(table.players[2].hand))));
     dispatch(blackjackActions.setAi2HandScore(table.players[2].getHandScore()));
-    setTimeout(() => {
-      dispatch(blackjackActions.setAi2GameStatus(table.players[2].gameStatus));
-    }, 1500);
+    dispatch(blackjackActions.setAi2GameStatus(table.players[2].gameStatus));
   }, [dispatch, table.players]);
 
   const updateHouse = useCallback(() => {
     dispatch(blackjackActions.setHouseHand(JSON.parse(JSON.stringify(table.house.hand))));
     dispatch(blackjackActions.setHouseHandScore(table.house.getHandScore()));
-    setTimeout(() => {
-      dispatch(blackjackActions.setHouseGameStatus(table.house.gameStatus));
-    }, 1500);
+    dispatch(blackjackActions.setHouseGameStatus(table.house.gameStatus));
   }, [dispatch, table.house]);
 
   const promptUser = useCallback(() => {
@@ -127,7 +121,7 @@ const BlackjackGame = () => {
   };
 
   const getRoundResults = useCallback(async () => {
-    await sleep(1500);
+    await sleep(1000);
     dispatch(blackjackActions.setWinAmount(table.players[0].winAmount));
     dispatch(blackjackActions.setRoundResults(table.resultsLog));
     updateHouse();
@@ -141,11 +135,14 @@ const BlackjackGame = () => {
   const loopHaveTurnWhileEvaluatingWinners = useCallback(async () => {
     while (table.gamePhase !== 'roundOver') {
       table.haveTurn(0);
-      await sleep(500);
+      await sleep(1500);
       updateHouse();
     }
+    updateAi1();
+    updateAi2();
+    updateUser();
     getRoundResults();
-  }, [getRoundResults, table, updateHouse]);
+  }, [getRoundResults, table, updateAi1, updateAi2, updateHouse, updateUser]);
 
   const hit = () => {
     dispatch(blackjackActions.setUnableSurrender(true));

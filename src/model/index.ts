@@ -515,11 +515,12 @@ export class Table {
           this.turnCounter++;
           return;
         case 'evaluatingWinners':
-          while (this.house.gameStatus !== 'stand' && this.house.gameStatus !== 'bust') {
+          if (this.house.gameStatus !== 'stand' && this.house.gameStatus !== 'bust') {
             this.evaluateMove(this.house);
+          } else {
+            this.resultsLog = [...this.resultsLog, this.blackjackEvaluateAndGetRoundResults()];
+            this.gamePhase = 'roundOver';
           }
-          this.resultsLog = [...this.resultsLog, this.blackjackEvaluateAndGetRoundResults()];
-          this.gamePhase = 'roundOver';
           return;
         case 'roundOver':
           this.blackjackClearPlayerHandsAndBets();
