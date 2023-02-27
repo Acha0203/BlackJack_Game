@@ -292,7 +292,7 @@ export class Table {
           player.gameStatus = 'bust';
           player.chips -= player.bet;
           player.winAmount -= player.bet;
-          if (player.chips < 0) {
+          if (player.chips <= 0) {
             player.gameStatus = 'broken';
           }
         }
@@ -312,7 +312,7 @@ export class Table {
           player.gameStatus = 'bust';
           player.chips -= player.bet;
           player.winAmount -= player.bet;
-          if (player.chips < 0) {
+          if (player.chips <= 0) {
             player.gameStatus = 'broken';
           }
         }
@@ -425,16 +425,20 @@ export class Table {
     */
   blackjackAssignPlayerHands(): void {
     for (const player of this.players) {
-      while (player.hand.length < 2) {
-        let card = this.deck.drawOne();
-        if (card !== undefined) {
-          player.hand.push(card);
-        } else {
-          console.log('The card is undefined!');
+      if (player.gameStatus !== 'broken') {
+        while (player.hand.length < 2) {
+          let card = this.deck.drawOne();
+          if (card !== undefined) {
+            player.hand.push(card);
+          } else {
+            console.log('The card is undefined!');
+          }
         }
-      }
-      if (this.isBlackJack(player)) {
-        player.gameStatus = 'blackjack';
+        if (this.isBlackJack(player)) {
+          player.gameStatus = 'blackjack';
+        }
+      } else {
+        console.log(player.name + 'is broken!');
       }
     }
 

@@ -217,7 +217,6 @@ const BlackjackGame = () => {
     updateAi1();
     updateAi2();
     updateHouse();
-    console.log(table.deck.cards);
     promptUser();
   };
 
