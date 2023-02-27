@@ -1,13 +1,16 @@
+import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../styles/Home.module.scss';
 import DealerArea from '@/components/DealerArea';
 import PlayerArea from '@/components/PlayerArea';
-import BettingWindow from '@/components/ui/BettingWindow';
 import DoubleButton from '@/components/ui/buttons/DoubleButton';
 import HitButton from '@/components/ui/buttons/HitButton';
 import StandButton from '@/components/ui/buttons/StandButton';
 import SurrenderButton from '@/components/ui/buttons/SurrenderButton';
+import BettingWindow from '@/components/ui/window/BettingWindow';
+import GameOverWindow from '@/components/ui/window/GameOverWindow';
+import NextGameWindow from '@/components/ui/window/NextGameWindow';
 import { Player, Table } from '@/model';
 import { blackjackActions } from '@/store/blackjack';
 import { BlackjackState } from '@/types';
@@ -21,6 +24,8 @@ const BlackjackGame = () => {
   const ai1GameStatus = useSelector((state: BlackjackState) => state.blackjack.ai1GameStatus);
   const ai2GameStatus = useSelector((state: BlackjackState) => state.blackjack.ai2GameStatus);
   const [showBettingWindow, setShowBettingWindow] = useState(false);
+  const [showNextGameWindow, setShowNextGameWindow] = useState(false);
+  const [showGameOverWindow, setShowGameOverWindow] = useState(false);
   const table = useMemo(() => new Table(gameType), [gameType]);
 
   const updateUser = useCallback(() => {
@@ -57,21 +62,38 @@ const BlackjackGame = () => {
 
   const promptUser = useCallback(() => {
     if (table.players[0].gameStatus === 'betting') {
+      dispatch(blackjackActions.setChips(table.players[0].chips));
+      dispatch(blackjackActions.setBet(0));
       setShowBettingWindow(true);
     }
-  }, [table.players]);
+  }, [dispatch, table.players]);
 
   const gameStart = useCallback(() => {
     table.players[0].name = userName;
+    updateUser();
+    updateAi1();
+    updateAi2();
+    updateHouse();
     table.deck.shuffle();
     promptUser();
-  }, [promptUser, table, userName]);
+  }, [
+    promptUser,
+    table.deck,
+    table.players,
+    updateAi1,
+    updateAi2,
+    updateHouse,
+    updateUser,
+    userName,
+  ]);
 
   const handleClick = () => {
     table.players[0].bet = bet;
     table.turnCounter++;
     table.players[0].gameStatus = 'waiting';
+    dispatch(blackjackActions.setUserGameStatus('waiting'));
     setShowBettingWindow(false);
+    console.log(table.players[0]);
 
     while (table.gamePhase === 'betting') {
       table.haveTurn(0);
@@ -84,6 +106,7 @@ const BlackjackGame = () => {
     updateAi2();
     updateHouse();
 
+    console.log(table.players);
     // カードを1枚ずつ開く処理
     loopHaveTurnWhileAiAction();
   };
@@ -105,11 +128,13 @@ const BlackjackGame = () => {
 
   const getRoundResults = useCallback(async () => {
     await sleep(1500);
+    dispatch(blackjackActions.setWinAmount(table.players[0].winAmount));
     dispatch(blackjackActions.setRoundResults(table.resultsLog));
     updateHouse();
     updateAi1();
     updateAi2();
     updateUser();
+    table.players[0].chips > 0 ? setShowNextGameWindow(true) : setShowGameOverWindow(true);
   }, [dispatch, table, updateAi1, updateAi2, updateHouse, updateUser]);
 
   // 勝者決定
@@ -187,6 +212,31 @@ const BlackjackGame = () => {
     );
   }, [ai1GameStatus, ai2GameStatus, userGameStatus]);
 
+  const startNextGame = () => {
+    setShowNextGameWindow(false);
+    table.blackjackClearPlayerHandsAndBets();
+    console.log(table);
+    dispatch(blackjackActions.setUnableSurrender(false));
+    dispatch(blackjackActions.setUnableStand(false));
+    dispatch(blackjackActions.setUnableHit(false));
+    dispatch(blackjackActions.setUnableDouble(false));
+    updateUser();
+    updateAi1();
+    updateAi2();
+    updateHouse();
+    table.deck.shuffle();
+    promptUser();
+  };
+
+  const startNewGame = () => {
+    setShowGameOverWindow(false);
+    console.log(table);
+    dispatch(blackjackActions.setUnableSurrender(false));
+    dispatch(blackjackActions.setUnableStand(false));
+    dispatch(blackjackActions.setUnableHit(false));
+    dispatch(blackjackActions.setUnableDouble(false));
+  };
+
   useEffect(() => {
     // bustならすべてのボタンをdisabledにする
     if (userGameStatus === 'bust') {
@@ -205,7 +255,7 @@ const BlackjackGame = () => {
     if (allPlayerActionsResolved()) {
       openHouseHand();
     }
-  }, [allPlayerActionsResolved, gameStart, openHouseHand]);
+  }, [allPlayerActionsResolved, openHouseHand]);
 
   return (
     <div>
@@ -225,7 +275,19 @@ const BlackjackGame = () => {
       </div>
       {showBettingWindow && (
         <div className={styles.overlay}>
-          <BettingWindow onClick={() => handleClick()} />
+          <BettingWindow onClick={() => handleClick()} betDenominations={table.betDenominations} />
+        </div>
+      )}
+      {showNextGameWindow && (
+        <div className={styles.overlay}>
+          <NextGameWindow onClick={() => startNextGame()} />
+        </div>
+      )}
+      {showGameOverWindow && (
+        <div className={styles.overlay}>
+          <Link href={'/'}>
+            <GameOverWindow onClick={() => startNewGame()} />
+          </Link>
         </div>
       )}
     </div>

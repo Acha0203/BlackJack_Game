@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import AllInButton from './buttons/AllInButton';
-import ResetButton from './buttons/ResetButton';
+import AllInButton from '../buttons/AllInButton';
+import ResetButton from '../buttons/ResetButton';
 import BettingSVG from '@/components/svgFiles/bettingSVG';
 import ChipButton from '@/components/ui/buttons/ChipButton';
 import OKButton from '@/components/ui/buttons/OKButton';
@@ -9,9 +9,10 @@ import { BlackjackState } from '@/types';
 
 interface Props {
   onClick: () => void;
+  betDenominations: number[];
 }
 
-const BettingWindow: React.FC<Props> = ({ onClick }) => {
+const BettingWindow: React.FC<Props> = ({ onClick, betDenominations }) => {
   const dispatch = useDispatch();
   const bet = useSelector((state: BlackjackState) => state.blackjack.bet);
   const chips = useSelector((state: BlackjackState) => state.blackjack.chips);
@@ -28,27 +29,27 @@ const BettingWindow: React.FC<Props> = ({ onClick }) => {
       <div className='flex justify-between items-center p-4'>
         <ChipButton
           imageUrl='images/chip-icon-1.svg'
-          amount={5}
+          amount={betDenominations[0]}
           color='#ff8400'
-          onClick={() => betChips(5)}
+          onClick={() => betChips(betDenominations[0])}
         />
         <ChipButton
           imageUrl='images/chip-icon-2.svg'
-          amount={20}
+          amount={betDenominations[1]}
           color='#009a39'
-          onClick={() => betChips(20)}
+          onClick={() => betChips(betDenominations[1])}
         />
         <ChipButton
           imageUrl='images/chip-icon-3.svg'
-          amount={50}
+          amount={betDenominations[2]}
           color='#00198a'
-          onClick={() => betChips(50)}
+          onClick={() => betChips(betDenominations[2])}
         />
         <ChipButton
           imageUrl='images/chip-icon-4.svg'
-          amount={100}
+          amount={betDenominations[3]}
           color='#45008f'
-          onClick={() => betChips(100)}
+          onClick={() => betChips(betDenominations[3])}
         />
       </div>
       <div className='text-center'>

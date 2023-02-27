@@ -163,6 +163,8 @@ export class Player {
           action = 'hit';
           this.gameStatus = 'hit';
         }
+      } else if (this.gameStatus === 'broken') {
+        action = 'broken';
       } else {
         console.log('player: ' + this.name + ' gameStatus: ' + this.gameStatus);
       }
@@ -333,13 +335,11 @@ export class Table {
       let amount = 0;
       roundResults += this.players[i].name;
 
-      if (
-        this.players[i].gameStatus === 'bust' ||
-        this.players[i].gameStatus === 'broken' ||
-        this.players[i].gameStatus === 'surrender'
-      ) {
+      if (this.players[i].gameStatus === 'bust' || this.players[i].gameStatus === 'surrender') {
         roundResults += ' lose: ';
         this.players[i].gameStatus = 'lose';
+      } else if (this.players[i].gameStatus === 'broken') {
+        roundResults += ' broken: ';
       } else {
         if (this.isBlackJack(this.house)) {
           // DealerがBlackjackの場合
@@ -356,53 +356,58 @@ export class Table {
             this.players[i].winAmount -= amount;
             this.players[i].gameStatus = 'lose';
           }
-        } else if (
-          // DealerがBlackjackではなく、PlayerがBust、Surrenderではない場合
-          this.players[i].getHandScore() <= 21 &&
-          (this.house.getHandScore() > 21 ||
-            this.house.getHandScore() < this.players[i].getHandScore())
-        ) {
-          roundResults += ' win: ';
+        } else {
+          // DealerがBlackjackではなく、PlayerがBlackjackの場合
           if (this.isBlackJack(this.players[i])) {
+            roundResults += ' win: ';
             amount = Math.floor(this.players[i].bet * 1.5);
             this.players[i].chips += amount;
             this.players[i].winAmount += amount;
-          } else if (this.players[i].gameStatus === 'double') {
-            amount = this.players[i].bet * 2;
-            this.players[i].chips += amount;
-            this.players[i].winAmount += amount;
+            this.players[i].gameStatus = 'win';
+          } else if (
+            // DealerがBlackjackではなく、PlayerがBust、Surrenderではない場合
+            this.players[i].getHandScore() <= 21 &&
+            (this.house.getHandScore() > 21 ||
+              this.house.getHandScore() < this.players[i].getHandScore())
+          ) {
+            roundResults += ' win: ';
+            if (this.players[i].gameStatus === 'double') {
+              amount = this.players[i].bet * 2;
+              this.players[i].chips += amount;
+              this.players[i].winAmount += amount;
+            } else {
+              this.players[i].chips += this.players[i].bet;
+              this.players[i].winAmount += this.players[i].bet;
+            }
+            this.players[i].gameStatus = 'win';
+          } else if (
+            (this.players[i].getHandScore() <= 21 &&
+              this.house.getHandScore() === this.players[i].getHandScore()) ||
+            (this.players[i].getHandScore() > 21 && this.house.getHandScore() > 21)
+          ) {
+            roundResults += ' push: ';
+            this.players[i].gameStatus = 'push';
           } else {
-            this.players[i].chips += this.players[i].bet;
-            this.players[i].winAmount += this.players[i].bet;
+            roundResults += ' lose: ';
+            if (this.players[i].gameStatus === 'double') {
+              amount = this.players[i].bet * 2;
+              this.players[i].chips -= amount;
+              this.players[i].winAmount -= amount;
+            } else {
+              this.players[i].chips -= this.players[i].bet;
+              this.players[i].winAmount -= this.players[i].bet;
+            }
+            this.players[i].gameStatus = 'lose';
           }
-          this.players[i].gameStatus = 'win';
-        } else if (
-          (this.players[i].getHandScore() <= 21 &&
-            this.house.getHandScore() === this.players[i].getHandScore()) ||
-          (this.players[i].getHandScore() > 21 && this.house.getHandScore() > 21)
-        ) {
-          roundResults += ' push: ';
-          this.players[i].gameStatus = 'push';
-        } else {
-          roundResults += ' lose: ';
-          if (this.players[i].gameStatus === 'double') {
-            amount = this.players[i].bet * 2;
-            this.players[i].chips -= amount;
-            this.players[i].winAmount -= amount;
-          } else {
-            this.players[i].chips -= this.players[i].bet;
-            this.players[i].winAmount -= this.players[i].bet;
+          roundResults += this.players[i].winAmount.toString(10) + '\n';
+          if (this.players[i].chips < 0) {
+            this.players[i].gameStatus = 'broken';
           }
-          this.players[i].gameStatus = 'lose';
-        }
-        roundResults += this.players[i].winAmount.toString(10) + '\n';
-        if (this.players[i].chips < 0) {
-          this.players[i].gameStatus = 'broken';
         }
       }
     }
 
-    console.log(roundResults)
+    console.log(roundResults);
     return roundResults;
   }
 
@@ -448,12 +453,20 @@ export class Table {
       return null : テーブル内のすべてのプレイヤーの状態を更新し、手札を空の配列に、ベットを0に設定します。
     */
   blackjackClearPlayerHandsAndBets(): void {
+    this.turnCounter = 0;
+    this.gamePhase = 'betting';
+
     for (const player of this.players) {
       while (player.hand.length > 0) {
         player.hand.pop();
       }
+
       player.bet = 0;
       player.winAmount = 0;
+
+      if (player.gameStatus !== 'broken') {
+        player.gameStatus = 'betting';
+      }
     }
 
     while (this.house.hand.length > 0) {
@@ -505,7 +518,7 @@ export class Table {
           while (this.house.gameStatus !== 'stand' && this.house.gameStatus !== 'bust') {
             this.evaluateMove(this.house);
           }
-          this.resultsLog.push(this.blackjackEvaluateAndGetRoundResults());
+          this.resultsLog = [...this.resultsLog, this.blackjackEvaluateAndGetRoundResults()];
           this.gamePhase = 'roundOver';
           return;
         case 'roundOver':

@@ -23,6 +23,7 @@ const initialBJState = {
   unableSurrender: false,
   unableDouble: false,
   roundResults: [],
+  winAmount: 0,
 };
 
 const blackjackSlice = createSlice({
@@ -35,11 +36,17 @@ const blackjackSlice = createSlice({
     setGameType: (state: { gameType: string }, action: { payload: string }) => {
       state.gameType = action.payload;
     },
+    setChips: (state: { chips: number }, action: { payload: number }) => {
+      state.chips = action.payload;
+    },
     addChips: (state: { chips: number }, action: { payload: number }) => {
       state.chips += action.payload;
     },
     subtractChips: (state: { chips: number }, action: { payload: number }) => {
       state.chips -= action.payload;
+    },
+    setBet: (state: { bet: number }, action: { payload: number }) => {
+      state.bet = action.payload;
     },
     addBet: (state: { bet: number }, action: { payload: number }) => {
       state.bet += action.payload;
@@ -97,6 +104,9 @@ const blackjackSlice = createSlice({
     },
     setRoundResults: (state: { roundResults: string[] }, action: { payload: string[] }) => {
       state.roundResults = action.payload;
+    },
+    setWinAmount: (state: { winAmount: number }, action: { payload: number }) => {
+      state.winAmount = action.payload;
     },
   },
 });

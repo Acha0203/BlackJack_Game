@@ -291,7 +291,7 @@ $card-mark-position-top: 35px;
   position: absolute;
   left: $card-padding;
   top: $card-padding;
-  background-color: rgb(104, 133, 238);
+  background: radial-gradient(#b5efff, #4842fb);
   width: $card-width - 10px;
   height: $card-height - 10px;
 }
