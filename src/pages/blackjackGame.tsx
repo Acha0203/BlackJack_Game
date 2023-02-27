@@ -258,12 +258,12 @@ const BlackjackGame = () => {
       <div className={styles.bj_table_bg}>
         <ResultLogButton />
         <DealerArea house={table.house} />
-        <div className='flex justify-center items-start mb-4'>
+        <div className='flex justify-center items-start mb-5'>
           <PlayerArea player={table.players[1]} />
           <PlayerArea player={table.players[0]} />
           <PlayerArea player={table.players[2]} />
         </div>
-        <div className='flex justify-center items-center bg-black w-full'>
+        <div className='flex justify-center items-start pt-3 bg-black w-full h-64'>
           <SurrenderButton onClick={() => surrender()} />
           <StandButton onClick={() => stand()} />
           <HitButton onClick={() => hit()} />
