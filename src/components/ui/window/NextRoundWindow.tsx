@@ -14,7 +14,7 @@ const NextRoundWindow: React.FC<Props> = ({ onClick }) => {
   const winAmount = useSelector((state: BlackjackState) => state.blackjack.winAmount);
 
   return (
-    <div className='flex-row justify-center items-center text-center bg-white p-5 z-20'>
+    <div className='flex-col justify-center items-center text-center bg-white p-5 z-20'>
       {winAmount > 0 && <WinSVG />}
       {winAmount < 0 && <LoseSVG />}
       {winAmount === 0 && <PushSVG />}

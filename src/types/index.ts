@@ -22,6 +22,7 @@ export type BlackjackState = {
     unableDouble: boolean;
     roundResults: string[];
     winAmount: number;
+    showResultLogWindow: boolean;
   };
 };
 

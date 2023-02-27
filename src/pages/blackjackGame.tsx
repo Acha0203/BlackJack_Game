@@ -6,12 +6,14 @@ import DealerArea from '@/components/DealerArea';
 import PlayerArea from '@/components/PlayerArea';
 import DoubleButton from '@/components/ui/buttons/DoubleButton';
 import HitButton from '@/components/ui/buttons/HitButton';
+import ResultLogButton from '@/components/ui/buttons/ResultLogButton';
 import StandButton from '@/components/ui/buttons/StandButton';
 import SurrenderButton from '@/components/ui/buttons/SurrenderButton';
 import BettingWindow from '@/components/ui/window/BettingWindow';
 import GameOverWindow from '@/components/ui/window/GameOverWindow';
 import NextRoundWindow from '@/components/ui/window/NextRoundWindow';
-import { Player, Table } from '@/model';
+import ResultLogWindow from '@/components/ui/window/ResultLogWindow';
+import { Table } from '@/model';
 import { blackjackActions } from '@/store/blackjack';
 import { BlackjackState } from '@/types';
 
@@ -23,6 +25,9 @@ const BlackjackGame = () => {
   const userGameStatus = useSelector((state: BlackjackState) => state.blackjack.userGameStatus);
   const ai1GameStatus = useSelector((state: BlackjackState) => state.blackjack.ai1GameStatus);
   const ai2GameStatus = useSelector((state: BlackjackState) => state.blackjack.ai2GameStatus);
+  const showResultLogWindow = useSelector(
+    (state: BlackjackState) => state.blackjack.showResultLogWindow,
+  );
   const [showBettingWindow, setShowBettingWindow] = useState(false);
   const [showNextRoundWindow, setShowNextRoundWindow] = useState(false);
   const [showGameOverWindow, setShowGameOverWindow] = useState(false);
@@ -251,6 +256,7 @@ const BlackjackGame = () => {
   return (
     <div>
       <div className={styles.bj_table_bg}>
+        <ResultLogButton />
         <DealerArea house={table.house} />
         <div className='flex justify-center items-start mb-4'>
           <PlayerArea player={table.players[1]} />
@@ -282,6 +288,11 @@ const BlackjackGame = () => {
           <Link href={'/'}>
             <GameOverWindow onClick={() => startNewGame()} />
           </Link>
+        </div>
+      )}
+      {showResultLogWindow && (
+        <div className={styles.overlay}>
+          <ResultLogWindow />
         </div>
       )}
     </div>

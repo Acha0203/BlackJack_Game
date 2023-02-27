@@ -24,6 +24,7 @@ const initialBJState = {
   unableDouble: false,
   roundResults: [],
   winAmount: 0,
+  showResultLogWindow: false,
 };
 
 const blackjackSlice = createSlice({
@@ -107,6 +108,9 @@ const blackjackSlice = createSlice({
     },
     setWinAmount: (state: { winAmount: number }, action: { payload: number }) => {
       state.winAmount = action.payload;
+    },
+    setShowResultLogWindow: (state: { showResultLogWindow: boolean }, action: { payload: boolean }) => {
+      state.showResultLogWindow = action.payload;
     },
   },
 });
