@@ -156,17 +156,17 @@ $color: #ffffff;
 
   /* Window表面のスタイル */
   .front {
-    transform: perspective(400px) rotateY(-180deg);
+    transform: perspective(600px) rotateY(-180deg);
   }
 
   /* 開いた時のWindow裏面 */
   .hide_back {
-    transform: perspective(400px) rotateY(180deg);
+    transform: perspective(600px) rotateY(180deg);
   }
 
   /* 開いた時のWindow表面 */
   .open_front {
-    transform: perspective(400px) rotateY(0);
+    transform: perspective(600px) rotateY(0);
   }
 }
 

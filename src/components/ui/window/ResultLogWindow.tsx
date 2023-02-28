@@ -1,25 +1,15 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from '../../../styles/Home.module.scss';
 import CloseButton from '../buttons/CloseButton';
 import ResultLogSVG from '@/components/svgFiles/resultLogSVG';
-import { blackjackActions } from '@/store/blackjack';
 import { BlackjackState } from '@/types';
 
 const ResultLogWindow = () => {
-  const dispatch = useDispatch();
   const openResultLogWindow = useSelector(
     (state: BlackjackState) => state.blackjack.openResultLogWindow,
   );
   const roundResults = useSelector((state: BlackjackState) => state.blackjack.roundResults);
-
-  useEffect(() => {
-    if (!openResultLogWindow) {
-      setTimeout(() => {
-        dispatch(blackjackActions.setOpenResultLogWindow(true));
-      }, 500);
-    }
-  }, [dispatch, openResultLogWindow]);
 
   return (
     <div className={styles.modal} style={{ width: '460px', height: '300px' }}>

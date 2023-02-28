@@ -9,6 +9,9 @@ const ResultLogButton = () => {
 
   const showResultLog = () => {
     dispatch(blackjackActions.setShowResultLogWindow(true));
+    setTimeout(() => {
+      dispatch(blackjackActions.setOpenResultLogWindow(true));
+    }, 500);
   };
 
   return (
