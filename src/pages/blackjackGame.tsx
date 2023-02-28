@@ -29,11 +29,10 @@ const BlackjackGame = () => {
   const showResultLogWindow = useSelector(
     (state: BlackjackState) => state.blackjack.showResultLogWindow,
   );
-  const openBettingWindow = useSelector(
-    (state: BlackjackState) => state.blackjack.openBettingWindow,
+  const showGameOverWindow = useSelector(
+    (state: BlackjackState) => state.blackjack.showGameOverWindow,
   );
   const [showBettingWindow, setShowBettingWindow] = useState(false);
-  const [showGameOverWindow, setShowGameOverWindow] = useState(false);
   const [showNextRoundWindow, setShowNextRoundWindow] = useState(false);
   const table = useMemo(() => new Table(gameType), [gameType]);
 
@@ -138,7 +137,9 @@ const BlackjackGame = () => {
     updateAi1();
     updateAi2();
     updateUser();
-    table.players[0].chips > 0 ? setShowNextRoundWindow(true) : setShowGameOverWindow(true);
+    table.players[0].chips > 0
+      ? setShowNextRoundWindow(true)
+      : dispatch(blackjackActions.setShowGameOverWindow(true));
   }, [dispatch, table, updateAi1, updateAi2, updateHouse, updateUser]);
 
   // 勝者決定
@@ -236,7 +237,7 @@ const BlackjackGame = () => {
   };
 
   useEffect(() => {
-    // bustならすべてのボタンをdisabledにする
+    // Bustならすべてのボタンをdisabledにする
     if (userGameStatus === 'bust') {
       dispatch(blackjackActions.setUnableSurrender(true));
       dispatch(blackjackActions.setUnableStand(true));
@@ -244,8 +245,13 @@ const BlackjackGame = () => {
       dispatch(blackjackActions.setUnableDouble(true));
     }
 
+    // Betした2倍のチップがないとDoubleはできない
     if (chips < bet * 2) {
       dispatch(blackjackActions.setUnableDouble(true));
+    }
+
+    if (userGameStatus === 'broken') {
+      dispatch(blackjackActions.setShowGameOverWindow(true));
     }
   }, [bet, chips, dispatch, userGameStatus]);
 

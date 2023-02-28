@@ -11,6 +11,8 @@ const NextGameWindow = () => {
 
   const startNewGame = () => {
     setOpenWindow(false);
+    dispatch(blackjackActions.setUserGameStatus('betting'));
+    dispatch(blackjackActions.setShowGameOverWindow(false));
     dispatch(blackjackActions.setUnableSurrender(false));
     dispatch(blackjackActions.setUnableStand(false));
     dispatch(blackjackActions.setUnableHit(false));

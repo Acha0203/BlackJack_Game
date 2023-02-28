@@ -25,6 +25,7 @@ const initialBJState = {
   roundResults: [],
   winAmount: 0,
   showResultLogWindow: false,
+  showGameOverWindow: false,
   openNextRoundWindow: false,
   openResultLogWindow: false,
   openBettingWindow: false,
@@ -112,13 +113,28 @@ const blackjackSlice = createSlice({
     setWinAmount: (state: { winAmount: number }, action: { payload: number }) => {
       state.winAmount = action.payload;
     },
-    setShowResultLogWindow: (state: { showResultLogWindow: boolean }, action: { payload: boolean }) => {
+    setShowResultLogWindow: (
+      state: { showResultLogWindow: boolean },
+      action: { payload: boolean },
+    ) => {
       state.showResultLogWindow = action.payload;
     },
-    setOpenNextRoundWindow: (state: { openNextRoundWindow: boolean }, action: { payload: boolean }) => {
+    setShowGameOverWindow: (
+      state: { showGameOverWindow: boolean },
+      action: { payload: boolean },
+    ) => {
+      state.showGameOverWindow = action.payload;
+    },
+    setOpenNextRoundWindow: (
+      state: { openNextRoundWindow: boolean },
+      action: { payload: boolean },
+    ) => {
       state.openNextRoundWindow = action.payload;
     },
-    setOpenResultLogWindow: (state: { openResultLogWindow: boolean }, action: { payload: boolean }) => {
+    setOpenResultLogWindow: (
+      state: { openResultLogWindow: boolean },
+      action: { payload: boolean },
+    ) => {
       state.openResultLogWindow = action.payload;
     },
     setOpenBettingWindow: (state: { openBettingWindow: boolean }, action: { payload: boolean }) => {
