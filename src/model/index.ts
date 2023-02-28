@@ -167,7 +167,7 @@ export class Player {
         action = 'noting';
         this.bet = 0;
       } else {
-        console.log('player: ' + this.name + ' gameStatus: ' + this.gameStatus);
+        // 何もしない
       }
     } else if (this.type === 'house') {
       if (hand >= 17) {
@@ -493,21 +493,24 @@ export class Table {
       this.turnCounter++;
       return;
     } else {
-      if (turnPlayer.gameStatus === 'broken') {
-        this.turnCounter++;
-        return;
-      }
-
       switch (this.gamePhase) {
         case 'betting':
-          this.evaluateMove(turnPlayer);
+          if (turnPlayer.gameStatus === 'broken') {
+            // 何もしない
+          } else {
+            this.evaluateMove(turnPlayer);
+          }
           if (this.onLastPlayer()) {
             this.gamePhase = 'acting';
           }
           this.turnCounter++;
           return;
         case 'acting':
-          this.evaluateMove(turnPlayer);
+          if (turnPlayer.gameStatus === 'broken') {
+            // 何もしない
+          } else {
+            this.evaluateMove(turnPlayer);
+          }
           if (this.allPlayerActionsResolved()) {
             this.gamePhase = 'evaluatingWinners';
           }

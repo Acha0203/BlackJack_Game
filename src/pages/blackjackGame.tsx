@@ -89,18 +89,18 @@ const BlackjackGame = () => {
     table.players[0].gameStatus = 'waiting';
     dispatch(blackjackActions.setUserGameStatus('waiting'));
     setShowBettingWindow(false);
-
+    
     while (table.gamePhase === 'betting') {
       table.haveTurn(0);
     }
-
+    
     // カードを配る処理
     table.blackjackAssignPlayerHands();
     updateUser();
     updateAi1();
     updateAi2();
     updateHouse();
-
+    
     // カードを1枚ずつ開く処理
     loopHaveTurnWhileAiAction();
   };

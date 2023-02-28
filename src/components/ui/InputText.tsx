@@ -1,4 +1,4 @@
-import { ChangeEventHandler, useEffect } from 'react';
+import { ChangeEventHandler } from 'react';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '@/store';
 import { blackjackActions } from '@/store/blackjack';
@@ -11,10 +11,6 @@ const InputText = () => {
   const handleNameChange: ChangeEventHandler<HTMLInputElement> = ({ target }) => {
     dispatch(blackjackActions.setUserName(target.value));
   };
-
-  useEffect(() => {
-    console.log(userName);
-  }, [userName]);
 
   return (
     <input

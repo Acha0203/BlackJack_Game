@@ -1,10 +1,8 @@
 import { Listbox, Transition } from '@headlessui/react';
 import { CheckIcon, ChevronDownIcon } from '@heroicons/react/20/solid';
-import { useEffect, useCallback } from 'react';
-import { useSelector } from 'react-redux';
+import { useCallback } from 'react';
 import { useAppDispatch } from '@/store';
 import { blackjackActions } from '@/store/blackjack';
-import { BlackjackState } from '@/types';
 
 const gameTypes = [
   { id: 1, type: 'Blackjack', unavailable: false },
@@ -13,17 +11,11 @@ const gameTypes = [
 
 const SelectGameType = () => {
   const dispatch = useAppDispatch();
-  const gameType = useSelector((state: BlackjackState) => state.blackjack.gameType);
   const selectedGameType = gameTypes[0];
 
   const handleChange = useCallback(() => {
     dispatch(blackjackActions.setGameType(selectedGameType.type));
   }, [dispatch, selectedGameType]);
-
-  useEffect(() => {
-    console.log(selectedGameType);
-    console.log(gameType);
-  }, [gameType, selectedGameType]);
 
   return (
     <Listbox value={selectedGameType} onChange={handleChange}>
