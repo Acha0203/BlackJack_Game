@@ -1,6 +1,6 @@
 const WinSVG = () => {
   return (
-    <div>
+    <div className='flex justify-center items-center'>
       <svg
         viewBox='0 0 360 30'
         width='400'
