@@ -22,15 +22,19 @@ const BlackjackGame = () => {
   const userName = useSelector((state: BlackjackState) => state.blackjack.userName);
   const gameType = useSelector((state: BlackjackState) => state.blackjack.gameType);
   const bet = useSelector((state: BlackjackState) => state.blackjack.bet);
+  const chips = useSelector((state: BlackjackState) => state.blackjack.chips);
   const userGameStatus = useSelector((state: BlackjackState) => state.blackjack.userGameStatus);
   const ai1GameStatus = useSelector((state: BlackjackState) => state.blackjack.ai1GameStatus);
   const ai2GameStatus = useSelector((state: BlackjackState) => state.blackjack.ai2GameStatus);
   const showResultLogWindow = useSelector(
     (state: BlackjackState) => state.blackjack.showResultLogWindow,
   );
+  const openBettingWindow = useSelector(
+    (state: BlackjackState) => state.blackjack.openBettingWindow,
+  );
   const [showBettingWindow, setShowBettingWindow] = useState(false);
-  const [showNextRoundWindow, setShowNextRoundWindow] = useState(false);
   const [showGameOverWindow, setShowGameOverWindow] = useState(false);
+  const [showNextRoundWindow, setShowNextRoundWindow] = useState(false);
   const table = useMemo(() => new Table(gameType), [gameType]);
 
   const updateUser = useCallback(() => {
@@ -62,6 +66,9 @@ const BlackjackGame = () => {
     dispatch(blackjackActions.setChips(table.players[0].chips));
     dispatch(blackjackActions.setBet(0));
     setShowBettingWindow(true);
+    setTimeout(() => {
+      dispatch(blackjackActions.setOpenBettingWindow(true));
+    }, 500);
   }, [dispatch, table.players]);
 
   const gameStart = useCallback(() => {
@@ -88,7 +95,10 @@ const BlackjackGame = () => {
     table.turnCounter++;
     table.players[0].gameStatus = 'waiting';
     dispatch(blackjackActions.setUserGameStatus('waiting'));
-    setShowBettingWindow(false);
+    dispatch(blackjackActions.setOpenBettingWindow(false));
+    setTimeout(() => {
+      setShowBettingWindow(false);
+    }, 500);
 
     while (table.gamePhase === 'betting') {
       table.haveTurn(0);
@@ -225,14 +235,6 @@ const BlackjackGame = () => {
     promptUser();
   };
 
-  const startNewGame = () => {
-    setShowGameOverWindow(false);
-    dispatch(blackjackActions.setUnableSurrender(false));
-    dispatch(blackjackActions.setUnableStand(false));
-    dispatch(blackjackActions.setUnableHit(false));
-    dispatch(blackjackActions.setUnableDouble(false));
-  };
-
   useEffect(() => {
     // bustならすべてのボタンをdisabledにする
     if (userGameStatus === 'bust') {
@@ -241,7 +243,11 @@ const BlackjackGame = () => {
       dispatch(blackjackActions.setUnableHit(true));
       dispatch(blackjackActions.setUnableDouble(true));
     }
-  }, [dispatch, userGameStatus]);
+
+    if (chips < bet * 2) {
+      dispatch(blackjackActions.setUnableDouble(true));
+    }
+  }, [bet, chips, dispatch, userGameStatus]);
 
   useEffect(() => {
     gameStart();
@@ -286,7 +292,7 @@ const BlackjackGame = () => {
       {showGameOverWindow && (
         <div className={styles.overlay}>
           <Link href={'/'}>
-            <GameOverWindow onClick={() => startNewGame()} />
+            <GameOverWindow />
           </Link>
         </div>
       )}

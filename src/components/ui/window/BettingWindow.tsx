@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from '../../../styles/Home.module.scss';
 import AllInButton from '../buttons/AllInButton';
@@ -18,29 +17,23 @@ const BettingWindow: React.FC<Props> = ({ onClick, betDenominations }) => {
   const dispatch = useDispatch();
   const bet = useSelector((state: BlackjackState) => state.blackjack.bet);
   const chips = useSelector((state: BlackjackState) => state.blackjack.chips);
-  const [openWindow, setOpenWindow] = useState(false);
+  const openBettingWindow = useSelector(
+    (state: BlackjackState) => state.blackjack.openBettingWindow,
+  );
 
   const betChips = (amount: number) => {
     dispatch(blackjackActions.addBet(amount));
   };
 
-  useEffect(() => {
-    if (!openWindow) {
-      setTimeout(() => {
-        setOpenWindow(true);
-      }, 500);
-    }
-  }, [openWindow]);
-
   return (
-    <div className={styles.modal}>
-      {openWindow ? (
+    <div className={styles.modal} style={{ width: '460px', height: '410px' }}>
+      {openBettingWindow ? (
         <div>
           <div className={`${styles.back} ${styles.hide_back}`}>
-            <div className='bg-gray-500 absolute w-full h-full'></div>
+            <div className='bg-black absolute w-full h-full'></div>
           </div>
           <div className={`${styles.front} ${styles.open_front}`}>
-            <div className='flex-row justify-center items-center bg-white p-5 z-10'>
+            <div className='flex-row justify-center items-center w-full h-full bg-white p-5 z-10'>
               <BettingSVG />
               <div className='flex justify-between items-center p-4'>
                 <ChipButton
@@ -87,10 +80,10 @@ const BettingWindow: React.FC<Props> = ({ onClick, betDenominations }) => {
       ) : (
         <div>
           <div className={styles.back}>
-            <div className='bg-gray-500 absolute w-full h-full'></div>
+            <div className='bg-black absolute w-full h-full'></div>
           </div>
           <div className={styles.front}>
-            <div className='flex-row justify-center items-center bg-white p-5 z-10'>
+            <div className='flex-row justify-center items-center w-full h-full bg-white p-5 z-10'>
               <BettingSVG />
               <div className='text-center'>
                 <p className='text-3xl'>You Bet ${bet}</p>

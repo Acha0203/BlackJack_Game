@@ -23,6 +23,9 @@ export type BlackjackState = {
     roundResults: string[];
     winAmount: number;
     showResultLogWindow: boolean;
+    openNextRoundWindow: boolean;
+    openResultLogWindow: boolean;
+    openBettingWindow: boolean;
   };
 };
 

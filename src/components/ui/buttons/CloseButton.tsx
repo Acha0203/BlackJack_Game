@@ -7,7 +7,10 @@ const CloseButton = () => {
   const dispatch = useDispatch();
 
   const closeWindow = () => {
-    dispatch(blackjackActions.setShowResultLogWindow(false));
+    dispatch(blackjackActions.setOpenResultLogWindow(false));
+    setTimeout(() => {
+      dispatch(blackjackActions.setShowResultLogWindow(false));
+    }, 500);
   };
 
   return (
