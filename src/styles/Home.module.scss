@@ -1,3 +1,4 @@
+/* Icons */
 .cards_icon {
   background: {
     image: linear-gradient(
@@ -16,6 +17,25 @@
   margin-bottom: 1rem;
 }
 
+.player_icon {
+  width: 20px;
+  height: auto;
+  @media screen and (min-width: 640px) {
+    width: 40px;
+  }
+}
+
+.result_log_icon {
+  width: 30px;
+  height: auto;
+  @media screen and (min-width: 640px) {
+    width: 40px;
+  }
+  @media screen and (min-width: 1024px) {
+    width: 50px;
+  }
+}
+
 /* SVG */
 .shadow_container {
   display: flex-row;
@@ -32,6 +52,15 @@
   left: 50%;
   transform: translate(-50%, -50%);
   font-size: 1.3rem;
+}
+
+.chip_image {
+  width: 60px;
+  height: 60px;
+  @media screen and (min-width: 640px) {
+    width: 80px;
+    height: 80px;
+  }
 }
 
 $color: #ffffff;
@@ -84,9 +113,6 @@ $color: #ffffff;
 
 /* Result Log Button */
 .result_log {
-  position: absolute;
-  top: 10px;
-  left: 10px;
   padding: 1rem;
 
   &:active {
@@ -148,12 +174,20 @@ $color: #ffffff;
 @mixin buttons {
   color: #ffffff;
   font-weight: bold;
+  font-size: 0.8rem;
   display: flex;
   justify-content: center;
   border-radius: 9999px;
   padding: {
     top: 0.6rem;
     bottom: 0.6rem;
+  }
+  @media screen and (min-width: 640px) {
+    font-size: 1rem;
+    padding: {
+      top: 0.4rem;
+      bottom: 0.4rem;
+    }
   }
 
   &:hover {
@@ -218,22 +252,34 @@ $color: #ffffff;
 
 .surrender_btn {
   @include blue_btn();
-  width: 150px;
+  width: 110px;
+  @media screen and (min-width: 640px) {
+    width: 150px;
+  }
 }
 
 .stand_btn {
   @include red_btn();
-  width: 100px;
+  width: 80px;
+  @media screen and (min-width: 640px) {
+    width: 100px;
+  }
 }
 
 .hit_btn {
   @include green_btn();
-  width: 100px;
+  width: 80px;
+  @media screen and (min-width: 640px) {
+    width: 100px;
+  }
 }
 
 .double_btn {
   @include orenge_btn();
-  width: 150px;
+  width: 110px;
+  @media screen and (min-width: 640px) {
+    width: 150px;
+  }
 }
 
 /* Table */
@@ -245,28 +291,31 @@ $color: #ffffff;
   width: 100vw;
   height: 100vh;
   background: {
-    image: linear-gradient(rgba(0, 81, 34, 0.5), rgba(0, 81, 34, 0.5)),
-      url('../../public/images/black-jack-table.svg');
+    image: url('../../public/images/black-jack-table.svg');
     repeat: no-repeat;
     position: top 20% left 0%;
   }
-  padding-top: 20px;
+  padding-top: 10px;
 }
 
 /* Card */
-$card-width: 80px;
-$card-height: 110px;
-$card-rounded: 5px;
-$card-font-size-sm: 0.8rem;
-$card-font-size-lg: 2rem;
-$card-padding: 5px;
-$card-mark-position-left: 25px;
-$card-mark-position-top: 35px;
+$card-width: 50px;
+$card-height: 75px;
+$card-rounded: 3px;
+$card-font-size-sm: 0.5rem;
+$card-font-size-lg: 1.2rem;
+$card-padding: 3px;
+$card-mark-position-top: 24px;
+$card-mark-position-left: 18px;
 
 .card {
   position: relative;
   width: $card-width;
   height: $card-height;
+  @media screen and (min-width: 640px) {
+    width: 80px;
+    height: 110px;
+  }
 
   /* カード裏面・表面の共通スタイル */
   .back,
@@ -306,6 +355,12 @@ $card-mark-position-top: 35px;
   font-size: $card-font-size-lg;
   background-color: #fff;
   filter: drop-shadow(4px 4px 4px #0000004e);
+  @media screen and (min-width: 640px) {
+    width: 80px;
+    height: 110px;
+    font-size: 2rem;
+    border-radius: 5px;
+  }
 }
 
 /* カード表面のイメージ */
@@ -313,25 +368,37 @@ $card-mark-position-top: 35px;
   text-align: center;
   & span {
     position: absolute;
-    left: $card-padding;
     top: $card-padding;
+    left: $card-padding;
     font-size: $card-font-size-sm;
     width: auto;
+    @media screen and (min-width: 640px) {
+      top: 5px;
+      left: 5px;
+    }
   }
 
   & div {
     position: absolute;
-    left: $card-mark-position-left;
     top: $card-mark-position-top;
+    left: $card-mark-position-left;
+    @media screen and (min-width: 640px) {
+      top: 35px;
+      left: 25px;
+    }
   }
 
   & span:last-child {
     position: absolute;
-    left: auto;
     top: auto;
+    left: auto;
     right: $card-padding;
     bottom: $card-padding;
     transform: rotate(180deg);
+    @media screen and (min-width: 640px) {
+      right: 5px;
+      bottom: 5px;
+    }
   }
 }
 
@@ -341,8 +408,14 @@ $card-mark-position-top: 35px;
   left: $card-padding;
   top: $card-padding;
   background: radial-gradient(#b5efff, #4842fb);
-  width: $card-width - 10px;
-  height: $card-height - 10px;
+  width: $card-width - $card-padding * 2;
+  height: $card-height - $card-padding * 2;
+  @media screen and (min-width: 640px) {
+    width: 70px;
+    height: 100px;
+    left: 5px;
+    top: 5px;
+  }
 }
 
 /* 画面遷移のアニメーション */

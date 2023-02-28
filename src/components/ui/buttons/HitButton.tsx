@@ -11,7 +11,7 @@ const HitButton: React.FC<Props> = ({ onClick }) => {
   const unableHit = useSelector((state: BlackjackState) => state.blackjack.unableHit);
 
   return (
-    <div className='m-5'>
+    <div className='mt-3 mx-3 md:mt-5'>
       <button className={styles.hit_btn} onClick={onClick} disabled={unableHit}>
         <p className='text-white'>HIT</p>
       </button>

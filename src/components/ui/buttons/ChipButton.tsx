@@ -26,12 +26,28 @@ const ChipButton: React.FC<Props> = ({ imageUrl, amount, color, onClick }) => {
   }, [amount, bet, chips]);
 
   return (
-    <button className={`${styles.chip_shiny} ${styles.shiny}`} onClick={onClick} disabled={isShort}>
-      <Image src={imageUrl} alt={`Chip of ${amount}`} width={80} height={80} />
-      <p className={styles.chip} style={{ color: color }}>
-        {amount}
-      </p>
-    </button>
+    <div className={styles.chip_image}>
+      <button
+        className={`${styles.chip_shiny} ${styles.shiny}`}
+        onClick={onClick}
+        disabled={isShort}
+      >
+        <Image
+          src={imageUrl}
+          alt={`Chip of ${amount}`}
+          width={80}
+          height={80}
+          sizes='100vw'
+          style={{
+            width: '100%',
+            height: 'auto',
+          }}
+        />
+        <p className={styles.chip} style={{ color: color }}>
+          {amount}
+        </p>
+      </button>
+    </div>
   );
 };
 

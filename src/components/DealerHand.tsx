@@ -15,7 +15,7 @@ const DealerHand: React.FC<Props> = ({ house }) => {
   return (
     <div className='flex justify-center items-center'>
       {houseGameStatus === 'waiting' && house.hand.length > 0 ? (
-        <div className='grid grid-cols-5 gap-1 w-32'>
+        <div className='grid grid-cols-5 gap-1 w-24 md:w-32'>
           <div>
             <CardImage
               key={house.hand[0].suit + house.hand[0].rank}

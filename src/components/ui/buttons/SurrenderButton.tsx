@@ -11,7 +11,7 @@ const SurrenderButton: React.FC<Props> = ({ onClick }) => {
   const unableSurrender = useSelector((state: BlackjackState) => state.blackjack.unableSurrender);
 
   return (
-    <div className='m-5'>
+    <div className='mt-3 mx-3 md:mt-5'>
       <button className={styles.surrender_btn} onClick={onClick} disabled={unableSurrender}>
         <p className='text-white'>SURRENDER</p>
       </button>

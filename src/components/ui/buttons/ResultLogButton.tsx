@@ -13,7 +13,14 @@ const ResultLogButton = () => {
 
   return (
     <div className={styles.result_log} onClick={showResultLog}>
-      <Image src='images/score_icon.svg' alt='Result Log Button' width={50} height={50} />
+      <Image
+        src='images/score_icon.svg'
+        alt='Result Log Button'
+        width={50}
+        height={50}
+        sizes='100vw'
+        className={styles.result_log_icon}
+      />
     </div>
   );
 };

@@ -268,14 +268,18 @@ const BlackjackGame = () => {
   return (
     <div className={styles.curtain_open}>
       <div className={styles.bj_table_bg}>
-        <ResultLogButton />
-        <DealerArea house={table.house} />
+        <div className='grid grid-cols-3 w-full'>
+          <div className='flex justify-start items-start'>
+            <ResultLogButton />
+          </div>
+          <DealerArea house={table.house} />
+        </div>
         <div className='flex justify-center items-start'>
           <PlayerArea player={table.players[1]} />
           <PlayerArea player={table.players[0]} />
           <PlayerArea player={table.players[2]} />
         </div>
-        <div className='flex justify-center items-start pt-3 bg-black w-full h-1/5'>
+        <div className='flex flex-wrap justify-center items-start pt-2 md:pt-3 bg-black w-full h-36 sm:h-48 md:h-1/5'>
           <SurrenderButton onClick={() => surrender()} />
           <StandButton onClick={() => stand()} />
           <HitButton onClick={() => hit()} />

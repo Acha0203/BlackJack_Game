@@ -11,7 +11,7 @@ const DoubleButton: React.FC<Props> = ({ onClick }) => {
   const unableDouble = useSelector((state: BlackjackState) => state.blackjack.unableDouble);
 
   return (
-    <div className='m-5'>
+    <div className='mt-3 mx-3 md:mt-5'>
       <button className={styles.double_btn} onClick={onClick} disabled={unableDouble}>
         <p className='text-white'>DOUBLE</p>
       </button>

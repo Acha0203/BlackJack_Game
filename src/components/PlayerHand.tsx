@@ -14,7 +14,7 @@ const PlayerHand: React.FC<Props> = ({ userType }) => {
 
   return (
     <div className='flex justify-center items-center'>
-      <div className='grid grid-cols-5 gap-1 w-32'>
+      <div className='grid grid-cols-5 gap-1 w-24 md:w-32'>
         {userType === 'user'
           ? userHand.map((card: { suit: string; rank: string }) => {
               return (
