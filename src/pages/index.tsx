@@ -23,23 +23,25 @@ const Home = () => {
   };
 
   return (
-    <div className='flex justify-center items-center'>
-      <form className='bg-white shadow-md rounded px-8 pt-6 pb-6'>
-        <div className={styles.cards_icon}>
-          <div className='pt-14'>
-            <TitleSVG />
+    <div className={styles.curtain_open}>
+      <div className='flex justify-center items-center'>
+        <form className='bg-white shadow-md rounded px-8 pt-6 pb-6'>
+          <div className={styles.cards_icon}>
+            <div className='pt-14'>
+              <TitleSVG />
+            </div>
           </div>
-        </div>
-        <div className='mb-4 w-64'>
-          <InputText />
-        </div>
-        <div className='inline-block relative w-64 mb-4'>
-          <SelectGameType />
-        </div>
-        <div className='flex items-center justify-center'>
-          <StartButton onClick={handleClick} />
-        </div>
-      </form>
+          <div className='mb-4 w-64'>
+            <InputText />
+          </div>
+          <div className='inline-block relative w-64 mb-4'>
+            <SelectGameType />
+          </div>
+          <div className='flex items-center justify-center'>
+            <StartButton onClick={handleClick} />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

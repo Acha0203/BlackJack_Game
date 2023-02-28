@@ -89,18 +89,18 @@ const BlackjackGame = () => {
     table.players[0].gameStatus = 'waiting';
     dispatch(blackjackActions.setUserGameStatus('waiting'));
     setShowBettingWindow(false);
-    
+
     while (table.gamePhase === 'betting') {
       table.haveTurn(0);
     }
-    
+
     // カードを配る処理
     table.blackjackAssignPlayerHands();
     updateUser();
     updateAi1();
     updateAi2();
     updateHouse();
-    
+
     // カードを1枚ずつ開く処理
     loopHaveTurnWhileAiAction();
   };
@@ -135,7 +135,7 @@ const BlackjackGame = () => {
   const loopHaveTurnWhileEvaluatingWinners = useCallback(async () => {
     while (table.gamePhase !== 'roundOver') {
       table.haveTurn(0);
-      await sleep(1500);
+      await sleep(1000);
       updateHouse();
     }
     updateAi1();
@@ -254,7 +254,7 @@ const BlackjackGame = () => {
   }, [allPlayerActionsResolved, openHouseHand]);
 
   return (
-    <div>
+    <div className={styles.curtain_open}>
       <div className={styles.bj_table_bg}>
         <ResultLogButton />
         <DealerArea house={table.house} />
