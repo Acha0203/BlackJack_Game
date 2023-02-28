@@ -297,23 +297,25 @@ $card-mark-position-top: 35px;
 }
 
 /* 画面遷移のアニメーション */
-.curtain_open::before,
-.curtain_open::after {
-  content: '';
-  position: fixed; /* 固定表示 */
-  top: 0;
-  width: 50vw;
-  height: 100vh;
-  background: linear-gradient(#000000, #606060);
-  animation: curtainOpen 1s forwards;
-  animation-delay: 1s;
-  z-index: 999;
-}
-.curtain_open::before {
-  left: 0;
-}
-.curtain_open::after {
-  right: 0;
+.curtain_open {
+  &::before,
+  &::after {
+    content: '';
+    position: fixed; /* 固定表示 */
+    top: 0;
+    width: 50vw;
+    height: 100vh;
+    background: linear-gradient(#000000, #606060);
+    animation: curtainOpen 1s forwards;
+    animation-delay: 1s;
+    z-index: 999;
+  }
+  &::before {
+    left: 0;
+  }
+  &::after {
+    right: 0;
+  }
 }
 
 @keyframes curtainOpen {

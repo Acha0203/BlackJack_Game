@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
+import styles from '../../../styles/Home.module.scss';
 import AllInButton from '../buttons/AllInButton';
 import ResetButton from '../buttons/ResetButton';
 import BettingSVG from '@/components/svgFiles/bettingSVG';
