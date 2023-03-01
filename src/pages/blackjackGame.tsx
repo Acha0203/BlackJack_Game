@@ -123,7 +123,7 @@ const BlackjackGame = () => {
   const loopHaveTurnWhileAiAction = async () => {
     while (!table.allPlayerActionsResolved()) {
       table.haveTurn(0);
-      await sleep(1500);
+      await sleep(1000);
       updateAi1();
       updateAi2();
     }
