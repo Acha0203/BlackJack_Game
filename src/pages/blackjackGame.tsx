@@ -106,6 +106,7 @@ const BlackjackGame = () => {
       table.haveTurn(0);
     }
 
+    await sleep(500);
     // カードを配る処理
     table.blackjackAssignPlayerHands();
     updateUser();

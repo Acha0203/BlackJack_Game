@@ -418,6 +418,15 @@ $card-mark-position-left: 18px;
   }
 }
 
+.secret_card {
+  position: relative;
+  left: -20px;
+  z-index: 30;
+  @media screen and (min-width: 640px) {
+    left: -27px;
+  }
+}
+
 /* 画面遷移のアニメーション */
 .curtain_open {
   &::before,
