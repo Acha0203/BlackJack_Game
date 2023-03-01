@@ -45,24 +45,24 @@ const BlackjackGame = () => {
   }, [dispatch, table.players]);
 
   const updateAi1 = useCallback(async () => {
-    dispatch(blackjackActions.setAi1Hand(JSON.parse(JSON.stringify(table.players[1].hand))));
-    await sleep(3000);
-    dispatch(blackjackActions.setAi1HandScore(table.players[1].getHandScore()));
     dispatch(blackjackActions.setAi1GameStatus(table.players[1].gameStatus));
+    dispatch(blackjackActions.setAi1Hand(JSON.parse(JSON.stringify(table.players[1].hand))));
+    await sleep(1500);
+    dispatch(blackjackActions.setAi1HandScore(table.players[1].getHandScore()));
   }, [dispatch, table.players]);
 
   const updateAi2 = useCallback(async () => {
-    dispatch(blackjackActions.setAi2Hand(JSON.parse(JSON.stringify(table.players[2].hand))));
-    await sleep(3000);
-    dispatch(blackjackActions.setAi2HandScore(table.players[2].getHandScore()));
     dispatch(blackjackActions.setAi2GameStatus(table.players[2].gameStatus));
+    dispatch(blackjackActions.setAi2Hand(JSON.parse(JSON.stringify(table.players[2].hand))));
+    await sleep(1500);
+    dispatch(blackjackActions.setAi2HandScore(table.players[2].getHandScore()));
   }, [dispatch, table.players]);
 
   const updateHouse = useCallback(async () => {
-    dispatch(blackjackActions.setHouseHand(JSON.parse(JSON.stringify(table.house.hand))));
-    await sleep(3000);
-    dispatch(blackjackActions.setHouseHandScore(table.house.getHandScore()));
     dispatch(blackjackActions.setHouseGameStatus(table.house.gameStatus));
+    dispatch(blackjackActions.setHouseHand(JSON.parse(JSON.stringify(table.house.hand))));
+    await sleep(1500);
+    dispatch(blackjackActions.setHouseHandScore(table.house.getHandScore()));
   }, [dispatch, table.house]);
 
   // BettingWindowを表示する
@@ -141,6 +141,7 @@ const BlackjackGame = () => {
     updateAi1();
     updateAi2();
     updateUser();
+    await sleep(500);
     table.players[0].chips > 0
       ? setShowNextRoundWindow(true)
       : dispatch(blackjackActions.setShowGameOverWindow(true));
@@ -153,6 +154,7 @@ const BlackjackGame = () => {
       await sleep(1000);
       updateHouse();
     }
+    await sleep(1000);
     updateAi1();
     updateAi2();
     updateUser();
