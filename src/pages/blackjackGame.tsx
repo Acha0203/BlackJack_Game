@@ -1,3 +1,4 @@
+import Head from 'next/head';
 import Link from 'next/link';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -266,51 +267,61 @@ const BlackjackGame = () => {
   }, [allPlayerActionsResolved, openHouseHand]);
 
   return (
-    <div className={styles.curtain_open}>
-      <div className={styles.bj_table_bg}>
-        <div className='grid grid-cols-3 w-full'>
-          <div className='flex justify-start items-start'>
-            <ResultLogButton />
+    <div>
+      <Head>
+        <title>Let&apos;s Play Card Games!</title>
+        <meta
+          name='description'
+          content='You can play the Blackjack card game on this page.'
+          key='desc'
+        />
+      </Head>
+      <div className={styles.curtain_open}>
+        <div className={styles.bj_table_bg}>
+          <div className='grid grid-cols-3 w-full'>
+            <div className='flex justify-start items-start'>
+              <ResultLogButton />
+            </div>
+            <DealerArea house={table.house} />
           </div>
-          <DealerArea house={table.house} />
+          <div className='flex justify-center items-start'>
+            <PlayerArea player={table.players[1]} />
+            <PlayerArea player={table.players[0]} />
+            <PlayerArea player={table.players[2]} />
+          </div>
+          <div className='flex flex-wrap justify-center items-start pt-2 md:pt-3 bg-black w-full h-36 sm:h-48 md:h-1/5'>
+            <SurrenderButton onClick={() => surrender()} />
+            <StandButton onClick={() => stand()} />
+            <HitButton onClick={() => hit()} />
+            <DoubleButton onClick={() => double()} />
+          </div>
         </div>
-        <div className='flex justify-center items-start'>
-          <PlayerArea player={table.players[1]} />
-          <PlayerArea player={table.players[0]} />
-          <PlayerArea player={table.players[2]} />
-        </div>
-        <div className='flex flex-wrap justify-center items-start pt-2 md:pt-3 bg-black w-full h-36 sm:h-48 md:h-1/5'>
-          <SurrenderButton onClick={() => surrender()} />
-          <StandButton onClick={() => stand()} />
-          <HitButton onClick={() => hit()} />
-          <DoubleButton onClick={() => double()} />
-        </div>
+        {showBettingWindow && (
+          <div className={styles.overlay}>
+            <BettingWindow
+              onClick={() => handleClickOK()}
+              betDenominations={table.betDenominations}
+            />
+          </div>
+        )}
+        {showNextRoundWindow && (
+          <div className={styles.overlay}>
+            <NextRoundWindow onClick={() => startNextRound()} />
+          </div>
+        )}
+        {showGameOverWindow && (
+          <div className={styles.overlay}>
+            <Link href={'/'}>
+              <GameOverWindow />
+            </Link>
+          </div>
+        )}
+        {showResultLogWindow && (
+          <div className={styles.overlay}>
+            <ResultLogWindow />
+          </div>
+        )}
       </div>
-      {showBettingWindow && (
-        <div className={styles.overlay}>
-          <BettingWindow
-            onClick={() => handleClickOK()}
-            betDenominations={table.betDenominations}
-          />
-        </div>
-      )}
-      {showNextRoundWindow && (
-        <div className={styles.overlay}>
-          <NextRoundWindow onClick={() => startNextRound()} />
-        </div>
-      )}
-      {showGameOverWindow && (
-        <div className={styles.overlay}>
-          <Link href={'/'}>
-            <GameOverWindow />
-          </Link>
-        </div>
-      )}
-      {showResultLogWindow && (
-        <div className={styles.overlay}>
-          <ResultLogWindow />
-        </div>
-      )}
     </div>
   );
 };
