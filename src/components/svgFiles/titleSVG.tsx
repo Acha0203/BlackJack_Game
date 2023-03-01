@@ -52,9 +52,9 @@ const TitleSVG = () => {
         </defs>
       </svg>
       <svg
-        viewBox='0 0 80 40'
-        width='250'
-        height='70'
+        viewBox='0 0 80 50'
+        width='260'
+        height='90'
         xmlns='http://www.w3.org/2000/svg'
         display='inline-block'
       >
