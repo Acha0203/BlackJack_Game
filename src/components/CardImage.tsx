@@ -4,21 +4,18 @@ import styles from '../styles/Home.module.scss';
 interface Props {
   suit: string;
   rank: string;
-  open: boolean;
 }
 
-const Card: React.FC<Props> = ({ suit, rank, open }) => {
+const Card: React.FC<Props> = ({ suit, rank }) => {
   const [openCards, setOpenCards] = useState(false);
 
   useEffect(() => {
-    if (open) {
-      if (!openCards) {
-        setTimeout(() => {
-          setOpenCards(true);
-        }, 1000);
-      }
+    if (!openCards) {
+      setTimeout(() => {
+        setOpenCards(true);
+      }, 1000);
     }
-  }, [open, openCards]);
+  }, [openCards]);
 
   return (
     <div className={styles.card}>

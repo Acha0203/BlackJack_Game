@@ -17,35 +17,14 @@ const PlayerHand: React.FC<Props> = ({ userType }) => {
       <div className='grid grid-cols-5 gap-1 w-24 md:w-32'>
         {userType === 'user'
           ? userHand.map((card: { suit: string; rank: string }) => {
-              return (
-                <CardImage
-                  key={card.suit + card.rank}
-                  suit={card.suit}
-                  rank={card.rank}
-                  open={true}
-                />
-              );
+              return <CardImage key={card.suit + card.rank} suit={card.suit} rank={card.rank} />;
             })
           : userType === 'ai1'
           ? ai1Hand.map((card: { suit: string; rank: string }) => {
-              return (
-                <CardImage
-                  key={card.suit + card.rank}
-                  suit={card.suit}
-                  rank={card.rank}
-                  open={true}
-                />
-              );
+              return <CardImage key={card.suit + card.rank} suit={card.suit} rank={card.rank} />;
             })
           : ai2Hand.map((card: { suit: string; rank: string }) => {
-              return (
-                <CardImage
-                  key={card.suit + card.rank}
-                  suit={card.suit}
-                  rank={card.rank}
-                  open={true}
-                />
-              );
+              return <CardImage key={card.suit + card.rank} suit={card.suit} rank={card.rank} />;
             })}
       </div>
     </div>
