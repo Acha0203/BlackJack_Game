@@ -37,38 +37,41 @@ const BlackjackGame = () => {
   const [showNextRoundWindow, setShowNextRoundWindow] = useState(false);
   const table = useMemo(() => new Table(gameType), [gameType]);
 
-  const updateUser = useCallback(() => {
-    dispatch(blackjackActions.setUserHand(JSON.parse(JSON.stringify(table.players[0].hand))));
-    dispatch(blackjackActions.setUserHandScore(table.players[0].getHandScore()));
+  const updateUser = useCallback(async () => {
     dispatch(blackjackActions.setUserGameStatus(table.players[0].gameStatus));
+    dispatch(blackjackActions.setUserHand(JSON.parse(JSON.stringify(table.players[0].hand))));
+    await sleep(1000);
+    dispatch(blackjackActions.setUserHandScore(table.players[0].getHandScore()));
   }, [dispatch, table.players]);
 
-  const updateAi1 = useCallback(() => {
+  const updateAi1 = useCallback(async () => {
     dispatch(blackjackActions.setAi1Hand(JSON.parse(JSON.stringify(table.players[1].hand))));
+    await sleep(3000);
     dispatch(blackjackActions.setAi1HandScore(table.players[1].getHandScore()));
     dispatch(blackjackActions.setAi1GameStatus(table.players[1].gameStatus));
   }, [dispatch, table.players]);
 
-  const updateAi2 = useCallback(() => {
+  const updateAi2 = useCallback(async () => {
     dispatch(blackjackActions.setAi2Hand(JSON.parse(JSON.stringify(table.players[2].hand))));
+    await sleep(3000);
     dispatch(blackjackActions.setAi2HandScore(table.players[2].getHandScore()));
     dispatch(blackjackActions.setAi2GameStatus(table.players[2].gameStatus));
   }, [dispatch, table.players]);
 
-  const updateHouse = useCallback(() => {
+  const updateHouse = useCallback(async () => {
     dispatch(blackjackActions.setHouseHand(JSON.parse(JSON.stringify(table.house.hand))));
+    await sleep(3000);
     dispatch(blackjackActions.setHouseHandScore(table.house.getHandScore()));
     dispatch(blackjackActions.setHouseGameStatus(table.house.gameStatus));
   }, [dispatch, table.house]);
 
   // BettingWindowを表示する
-  const promptUser = useCallback(() => {
+  const promptUser = useCallback(async () => {
     dispatch(blackjackActions.setChips(table.players[0].chips));
     dispatch(blackjackActions.setBet(0));
     setShowBettingWindow(true);
-    setTimeout(() => {
-      dispatch(blackjackActions.setOpenBettingWindow(true));
-    }, 500);
+    await sleep(500);
+    dispatch(blackjackActions.setOpenBettingWindow(true));
   }, [dispatch, table.players]);
 
   const gameStart = useCallback(() => {
@@ -90,15 +93,14 @@ const BlackjackGame = () => {
     userName,
   ]);
 
-  const handleClickOK = () => {
+  const handleClickOK = async () => {
     table.players[0].bet = bet;
     table.turnCounter++;
     table.players[0].gameStatus = 'waiting';
     dispatch(blackjackActions.setUserGameStatus('waiting'));
     dispatch(blackjackActions.setOpenBettingWindow(false));
-    setTimeout(() => {
-      setShowBettingWindow(false);
-    }, 500);
+    await sleep(500);
+    setShowBettingWindow(false);
 
     while (table.gamePhase === 'betting') {
       table.haveTurn(0);
