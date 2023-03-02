@@ -2,7 +2,7 @@ const BettingSVG = () => {
   return (
     <div className='flex justify-center items-center'>
       <svg
-        viewBox='0 0 360 30'
+        viewBox='0 0 400 30'
         width='400'
         height='70'
         xmlns='http://www.w3.org/2000/svg'
