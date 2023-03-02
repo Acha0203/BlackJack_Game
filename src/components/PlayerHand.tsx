@@ -19,7 +19,7 @@ const PlayerHand: React.FC<Props> = ({ userType }) => {
           ? userHand.map((card: { suit: string; rank: string }) => {
               return <CardImage key={card.suit + card.rank} suit={card.suit} rank={card.rank} />;
             })
-          : userType === 'ai1'
+          : userType === 'AI1'
           ? ai1Hand.map((card: { suit: string; rank: string }) => {
               return <CardImage key={card.suit + card.rank} suit={card.suit} rank={card.rank} />;
             })

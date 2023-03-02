@@ -256,8 +256,8 @@ export class Table {
 
     // プレイヤーの初期化
     this.players.push(new Player('You', 'user', this.gameType));
-    this.players.push(new Player('ai1', 'ai', this.gameType));
-    this.players.push(new Player('ai2', 'ai', this.gameType));
+    this.players.push(new Player('AI1', 'ai', this.gameType));
+    this.players.push(new Player('AI2', 'ai', this.gameType));
 
     this.house = new Player('house', 'house', this.gameType);
     this.house.gameStatus = 'waiting';

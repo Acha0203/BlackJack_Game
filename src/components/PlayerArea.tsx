@@ -31,9 +31,9 @@ const PlayerArea: React.FC<Props> = ({ player }) => {
       <div className='text-center mb-2'>
         <p className='text-sm sm:text-md md:text-lg text-white'>
           Score:{' '}
-          {player.name === 'ai1'
+          {player.name === 'AI1'
             ? ai1HandScore
-            : player.name === 'ai2'
+            : player.name === 'AI2'
             ? ai2HandScore
             : userHandScore}{' '}
           bet: {player.bet}

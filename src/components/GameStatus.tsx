@@ -15,9 +15,9 @@ const GameStatus: React.FC<Props> = ({ playerName }) => {
   let gameStatus = '';
   if (playerName === 'house') {
     gameStatus = houseGameStatus;
-  } else if (playerName === 'ai1') {
+  } else if (playerName === 'AI1') {
     gameStatus = ai1GameStatus;
-  } else if (playerName === 'ai2') {
+  } else if (playerName === 'AI2') {
     gameStatus = ai2GameStatus;
   } else {
     gameStatus = userGameStatus;
