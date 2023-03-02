@@ -1,10 +1,28 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Let's Play Card Games
 
-## Getting Started
+コンピュータサイエンス学習プラットフォーム[Recursion](https://recursionist.io)の課題として作成したトランプゲームです。スタート画面ではブラックジャックかポーカーを選択できるようになっていますが、現在のところブラックジャックのみ実装しています (ブラックジャックの詳細: <https://ja.wikipedia.org/wiki/ブラックジャック>)。Next.js + TypeScript + Redux で開発しました。
 
-First, run the development server:
+## DEMO
 
-```bash
+![blackjack_demo](https://user-images.githubusercontent.com/74553433/222501214-e8159831-2b1f-4b9b-84d5-37286bea00a1.gif)
+
+## Pages URL
+
+<https://acha0203.github.io/BlackJack_Game/>
+
+## Features
+
+特別ルールとして「Surrender」と「Double」を採用しています。
+
+## Project setup
+
+```shell
+npm install
+```
+
+### Compiles and hot-reloads for development
+
+```shell
 npm run dev
 # or
 yarn dev
@@ -12,27 +30,23 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Author
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+Acha0203
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+## License
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+BSD 3-Clause License
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Copyright (c) 2021, Acha0203
+All rights reserved.
 
-## Learn More
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
-To learn more about Next.js, take a look at the following resources:
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+3. Neither the name of the copyright holder nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
