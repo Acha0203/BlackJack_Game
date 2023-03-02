@@ -4,7 +4,7 @@
 
 ## DEMO
 
-![blackjack_demo](https://user-images.githubusercontent.com/74553433/222501214-e8159831-2b1f-4b9b-84d5-37286bea00a1.gif)
+![blackjack_demo](https://user-images.githubusercontent.com/74553433/222507834-1bdec100-f7c9-4805-9399-37ab364478a5.gif)
 
 ## Pages URL
 
