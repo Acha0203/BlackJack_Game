@@ -299,14 +299,14 @@ $color: #ffffff;
 }
 
 /* Card */
-$card-width: 50px;
+$card-width: 53px;
 $card-height: 75px;
 $card-rounded: 3px;
 $card-font-size-sm: 0.5rem;
 $card-font-size-lg: 1.2rem;
 $card-padding: 3px;
 $card-mark-position-top: 24px;
-$card-mark-position-left: 18px;
+$card-mark-position-left: 17px;
 
 .card {
   position: relative;
@@ -383,8 +383,8 @@ $card-mark-position-left: 18px;
     top: $card-mark-position-top;
     left: $card-mark-position-left;
     @media screen and (min-width: 640px) {
-      top: 35px;
-      left: 25px;
+      top: 33px;
+      left: 24px;
     }
   }
 
