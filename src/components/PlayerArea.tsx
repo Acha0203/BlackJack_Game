@@ -17,7 +17,7 @@ const PlayerArea: React.FC<Props> = ({ player }) => {
   const ai2HandScore = useSelector((state: BlackjackState) => state.blackjack.ai2HandScore);
 
   return (
-    <div className='flex-col justify-center items-start mx-3 sm:mx-6 md:mx-10 h-60 sm:h-72'>
+    <div className='flex-col justify-center items-start sm:mx-4 md:mx-6 h-60 sm:h-72'>
       <div className='flex justify-center items-center'>
         <Image
           src={`images/${player.type}_icon.svg`}
@@ -28,7 +28,7 @@ const PlayerArea: React.FC<Props> = ({ player }) => {
         />
         <p className='text-xl md:text-3xl text-white p-2'>{player.name}</p>
       </div>
-      <div className='text-center mb-2'>
+      <div className='text-center mb-2 w-32 sm:w-48'>
         <p className='text-sm sm:text-md md:text-lg text-white'>
           Score:{' '}
           {player.name === 'AI1'
@@ -36,7 +36,7 @@ const PlayerArea: React.FC<Props> = ({ player }) => {
             : player.name === 'AI2'
             ? ai2HandScore
             : userHandScore}{' '}
-          bet: {player.bet}
+          Bet: {player.bet}
         </p>
         <p className='text-sm sm:text-md md:text-lg text-white'>Chips: {player.chips}</p>
       </div>
