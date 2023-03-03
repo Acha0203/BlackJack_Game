@@ -29,6 +29,7 @@ const initialBJState = {
   openNextRoundWindow: false,
   openResultLogWindow: false,
   openBettingWindow: false,
+  isAllIn: false,
 };
 
 const blackjackSlice = createSlice({
@@ -139,6 +140,9 @@ const blackjackSlice = createSlice({
     },
     setOpenBettingWindow: (state: { openBettingWindow: boolean }, action: { payload: boolean }) => {
       state.openBettingWindow = action.payload;
+    },
+    setIsAllIn: (state: { isAllIn: boolean }, action: { payload: boolean }) => {
+      state.isAllIn = action.payload;
     },
   },
 });

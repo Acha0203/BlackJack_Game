@@ -90,6 +90,7 @@ $color: #ffffff;
 
   &:active {
     transform: translate(2px, 2px);
+    filter: drop-shadow(0 0 0 #ffffff);
   }
 
   &:disabled {
@@ -195,13 +196,12 @@ $color: #ffffff;
   }
 
   &:active {
-    transform: translate(2px, 2px);
+    filter: brightness(1.5);
   }
 
   &:disabled {
     filter: brightness(0.5);
     cursor: not-allowed;
-    transform: translate(-2px, -2px);
   }
 }
 

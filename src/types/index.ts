@@ -27,6 +27,7 @@ export type BlackjackState = {
     openNextRoundWindow: boolean;
     openResultLogWindow: boolean;
     openBettingWindow: boolean;
+    isAllIn: boolean;
   };
 };
 
